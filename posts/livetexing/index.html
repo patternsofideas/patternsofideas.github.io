@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Thoughts on Live TeX&#39;ing &mdash; Patterns of Ideas</title>
+  <link rel="stylesheet" type="text/css" href="/static/tufte.css">
+  <link rel="stylesheet" type="text/css" href="/static/latex.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/pygments.min.css">
+  <script type="text/javascript" src="/static/enquire.min.js"></script>
+  <script type="text/javascript" src="/static/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="/static/resources.min.js"></script>
+  <script type="text/javascript" src="/static/LaTeXMathML.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='shortcut icon' href="/static/favicon.ico" type='image/x-icon'/>
+  <style type="text/css">
+   img { mix-blend-mode: multiply; }
+  </style>
+  <meta property="og:author" content="Samir Khan" />
+  <meta property="og:title" content="Thoughts on Live TeX&#39;ing" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="Some opinions about taking notes in class using TeX." />
+  <meta property="og:url" content="/posts/livetexing/" />
+  <meta property="og:image" content="/static/img/athena.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Thoughts on Live TeX&#39;ing" />
+  <meta name="twitter:description" content="Some opinions about taking notes in class using TeX." />
+  <meta name="twitter:url" content="/posts/livetexing/" />
+  <meta name="twitter:image" content="/static/img/athena.png" />
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+<body>
+  <div class="thearticle">
+
+  <article>
+  
+    <h1>Thoughts on Live TeX&#39;ing</h1>
+    <p id="blog-p"><span id="blogdesc" class="marginnote">
+    A personal blog by Samir Khan<br><br>
+    <a href="/">home</a> ·
+    
+      <a href="/about/">
+        about</a>
+    </span></p>
+
+    <subtitle class="sub-date">February 13, 2017 · <span style="font-size: 1.6rem;"><a style="border-bottom-width: 0px !important;" href="/posts/livetexing/">&infin;</a></span></subtitle>
+
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<p>I decided the summer before coming to college that I wanted to live-TeX notes for my math classes, and dutifully set out to seek advice from the Internet. The results were uncharacteristically disappointing. Only a handful of blog posts and articles discuss the subject, and that handful really only addresses the logistics involved. So this post is a more spiritual take on live-TeX’ing, based on my experiences.</p>
+<p>(Caveat emptor: my experiences are probably not universal. Your mileage may vary.)</p>
+<p>Before I say anything about TeX’ing, a quick summary of the alternatives. Taking notes on paper, although apparently effective for some people, doesn’t work for me because of my poor handwriting. Not taking notes, although certainly effective in some situations, doesn’t seem like a good idea in every situation. So for me, the choice is between TeX’ing, and sitting back and listening.</p>
+<p>TeX’ing notes has the advantage of forcing you to pay attention to the superstructure of a lecture. There’s usually more to a lecture than the union of all the theorems, definitions, and proofs, and typing things like “We want this to be true in general, but…,” or “The punchline is that…,” or “With this example in mind, we define…” quickly draws your attention to them. You could certainly do this with a pen and paper too, but they’re usually too slow to give you time to jot down these longer ideas (unless that’s all you do). The speed of typing gives you extra time to spend on exposition, and crafting this exposition on the fly solidifies your ideas about the material.</p>
+<p>This advantage is tempered though, by the difficulties that can arise from TeX’ing long technical arguments. One flavor of such arguments, that involves repeated manipulations of a single expression, is very amenable to being TeX’ed – copy-pasting is significantly faster than rewriting the entire expression. But another flavor involves many different expressions that hardly resemble each other, and these are deeply problematic, especially if matrices rear their ugly head or if subscripts are floating around. I’ve made the mistake before of getting caught up in transcription, only to realize that I have no clue what the math I’m transcribing means.</p>
+<p>Another issue is that superstructure isn’t always what you should be paying attention to in a lecture. There’s a certain kind of wild, edge-of-your-seat lecture, where it’s all you can do to hang on and follow the speaker line by line. In these talks, trying to suss out those big ideas not only fails, but actually detracts from your ability to understand the basic material. On the other end of the spectrum, some lectures are on material that you’ve seen or are completely familiar with, and have already internalized the yoga of, so this advantage completely evaporates.</p>
+<p>A great deal also depends on the lecturer. Obviously good lecturers are easy to take notes on, and bad lecturers hard, but many otherwise insignificant quirks can make a particular lecturer a pain to live-TeX.</p>
+<p>Some lecturers are fond of nesting things. They’ll start a theorem, realize they need a definition, make a few remarks about the definition, maybe prove a claim. This is all fine at the board, but if you’re working (as I often do) with boxes around theorems and definitions on the page, it doesn’t translate well at all.</p>
+<p>Other lecturers are prone to making corrections to their board work that are easy at the board, but hard on a computer. Swapping entries in a large matrix, adding forgotten tildes, or erasing and rewriting part of an expression while verbally explaining the manipulation all fall into this category.</p>
+<p>And finally, there are lecturers who draw pictures. Simpler pictures, or complicated pictures drawn once and left alone are usually fine, and can be recreated afterward if they’re essential, but sometimes you have lectures that basically consist of progressively adding to a single image over the course of an hour, and these are really a lost cause. I have no idea how to handle them.</p>
+<p>Of course, it’s very hard to synthesize all of these ideas into a hard and fast rule for deciding whether or not to TeX a talk. The system I’ve developed is that unless I’m very confident that it won’t work out, I’ll err on the side of trying to TeX, but am also very forgiving of myself for giving up halfway through a talk. It’s not a perfect system, but it gives reasonable results, especially as I become more aware of the red flags that tell me to stop TeX’ing.</p>
+</body>
+</html>
+
+  
+  </article>
+
+  </div>
+  <div class="thefooter">
+    <p>Made with Athena
+    <br><br>Copyright, <i>2016</i></p>
+  </div> <!-- footer end -->
+</body>
+</html>

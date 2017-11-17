@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Memory in Speech Processing &mdash; Patterns of Ideas</title>
+  <link rel="stylesheet" type="text/css" href="/static/tufte.css">
+  <link rel="stylesheet" type="text/css" href="/static/latex.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/pygments.min.css">
+  <script type="text/javascript" src="/static/enquire.min.js"></script>
+  <script type="text/javascript" src="/static/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="/static/resources.min.js"></script>
+  <script type="text/javascript" src="/static/LaTeXMathML.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='shortcut icon' href="/static/favicon.ico" type='image/x-icon'/>
+  <style type="text/css">
+   img { mix-blend-mode: multiply; }
+  </style>
+  <meta property="og:author" content="Samir Khan" />
+  <meta property="og:title" content="Memory in Speech Processing" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="A comparison of two notions of memory in speech processing." />
+  <meta property="og:url" content="/posts/memory/" />
+  <meta property="og:image" content="/static/img/athena.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Memory in Speech Processing" />
+  <meta name="twitter:description" content="A comparison of two notions of memory in speech processing." />
+  <meta name="twitter:url" content="/posts/memory/" />
+  <meta name="twitter:image" content="/static/img/athena.png" />
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+<body>
+  <div class="thearticle">
+
+  <article>
+  
+    <h1>Memory in Speech Processing</h1>
+    <p id="blog-p"><span id="blogdesc" class="marginnote">
+    A personal blog by Samir Khan<br><br>
+    <a href="/">home</a> ·
+    
+      <a href="/about/">
+        about</a>
+    </span></p>
+
+    <subtitle class="sub-date">June 07, 2017 · <span style="font-size: 1.6rem;"><a style="border-bottom-width: 0px !important;" href="/posts/memory/">&infin;</a></span></subtitle>
+
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<p>This very short post is just to jot down an epiphany I had about a connection between two different approaches used in speech processing.</p>
+<p>One popular kind of feature extracted from raw speech data is an MFCC. I don’t want to dwell too much on what exactly this is, but it basically involves taking two Fourier transforms (so it’s the spectrum of a spectrum), which works well, but is completely mystifying. The first Fourier transform makes sense, since sound waves are a periodic phenomenon, but the second one makes much less sense.</p>
+<p>Another group of approaches that are growing in popularity are recurrent neural networks, which are basically networks that have some notion of “memory” built in to them. This means that inputs seen at previous times can be used for prediction for a present input, although details vary a lot depending on the particular implementation.</p>
+<p>The punchline is that, on some level, these are doing similar things. Or rather, the MFCC is also relying on the idea that data from previous time points are influencing the current data point.</p>
+<p>To see this, suppose our data are <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><mi>⋯</mi><mo>,</mo></mrow><annotation encoding="application/x-tex">x_1, x_2,\cdots,</annotation></semantics></math> and that they follow a model of the form <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>t</mi></msub><mo>=</mo><msub><mi>s</mi><mi>t</mi></msub><mo>+</mo><mi>A</mi><msub><mi>s</mi><mrow><mi>t</mi><mo>−</mo><mi>D</mi></mrow></msub><mo>,</mo></mrow><annotation encoding="application/x-tex">x_t=s_t+As_{t-D},</annotation></semantics></math></p>
+<p>for some other stationary series <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mi>t</mi></msub><annotation encoding="application/x-tex">s_t</annotation></semantics></math> and constants <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>,</mo><mi>D</mi></mrow><annotation encoding="application/x-tex">A, D</annotation></semantics></math>. The recurrent neural network would try to learn that <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mrow><mi>t</mi><mo>−</mo><mi>D</mi></mrow></msub><annotation encoding="application/x-tex">x_{t-D}</annotation></semantics></math> carries information about <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mi>t</mi></msub><annotation encoding="application/x-tex">x_t</annotation></semantics></math> (since it is designed to have access to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mrow><mi>t</mi><mo>−</mo><mi>D</mi></mrow></msub><annotation encoding="application/x-tex">x_{t-D}</annotation></semantics></math>. What about the MFCC?</p>
+<p>It’s helpful to directly compute the spectrum, starting with the auto-covariance. If <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>γ</mi><mi>s</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>h</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mtext mathvariant="normal">cov</mtext><mo stretchy="false" form="prefix">(</mo><msub><mi>s</mi><mrow><mi>t</mi><mo>+</mo><mi>h</mi></mrow></msub><mo>,</mo><msub><mi>s</mi><mi>t</mi></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\gamma_s(h)=\text{cov}(s_{t+h}, s_t)</annotation></semantics></math> is the auto-covariance of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mi>t</mi></msub><annotation encoding="application/x-tex">s_t</annotation></semantics></math>, then the auto-covariance of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mi>t</mi></msub><annotation encoding="application/x-tex">x_t</annotation></semantics></math> is <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>γ</mi><mi>x</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>h</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mtext mathvariant="normal">cov</mtext><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mrow><mi>t</mi><mo>+</mo><mi>h</mi></mrow></msub><mo>,</mo><msub><mi>x</mi><mi>t</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mtext mathvariant="normal">cov</mtext><mo stretchy="false" form="prefix">(</mo><msub><mi>s</mi><mrow><mi>t</mi><mo>+</mo><mi>h</mi></mrow></msub><mo>+</mo><mi>A</mi><msub><mi>s</mi><mrow><mi>t</mi><mo>−</mo><mi>D</mi><mo>+</mo><mi>h</mi></mrow></msub><mo>,</mo><msub><mi>s</mi><mi>t</mi></msub><mo>+</mo><mi>A</mi><msub><mi>s</mi><mrow><mi>t</mi><mo>−</mo><mi>D</mi></mrow></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\gamma_x(h)=\text{cov}(x_{t+h}, x_t)=\text{cov}(s_{t+h}+As_{t-D+h}, s_t+As_{t-D})</annotation></semantics></math> which, because the covariance is bilinear, becomes <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><msup><mi>A</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo><msub><mi>γ</mi><mi>s</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>h</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>A</mi><msub><mi>γ</mi><mi>s</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>h</mi><mo>+</mo><mi>D</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>A</mi><msub><mi>γ</mi><mi>s</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>h</mi><mo>−</mo><mi>D</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">(1+A^2)\gamma_s(h)+A\gamma_s(h+D)+A\gamma_s(h-D).</annotation></semantics></math></p>
+<p>Then the theoretical spectrum is <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>x</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><munderover><mo>∑</mo><mrow><mi>h</mi><mo>=</mo><mo>−</mo><mi>∞</mi></mrow><mi>∞</mi></munderover><msub><mi>γ</mi><mi>x</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>h</mi><mo stretchy="false" form="postfix">)</mo><msup><mi>e</mi><mrow><mo>−</mo><mn>2</mn><mi>π</mi><mi>i</mi><mi>ω</mi></mrow></msup><mo>,</mo></mrow><annotation encoding="application/x-tex">f_x(\omega)=\sum_{h=-\infty}^{\infty} \gamma_x(h)e^{-2\pi i \omega},</annotation></semantics></math></p>
+<p>which because of our earlier computation expands to <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><munderover><mo>∑</mo><mrow><mi>h</mi><mo>=</mo><mo>−</mo><mi>∞</mi></mrow><mi>∞</mi></munderover><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><msup><mi>A</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo><msub><mi>γ</mi><mi>s</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>h</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>A</mi><msub><mi>γ</mi><mi>s</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>h</mi><mo>+</mo><mi>D</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>A</mi><msub><mi>γ</mi><mi>s</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>h</mi><mo>−</mo><mi>D</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">)</mo><msup><mi>e</mi><mrow><mo>−</mo><mn>2</mn><mi>π</mi><mi>i</mi><mi>ω</mi><mi>h</mi></mrow></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">\sum_{h=-\infty}^{\infty}((1+A^2)\gamma_s(h)+A\gamma_s(h+D)+A\gamma_s(h-D)) e^{-2\pi i \omega h}.</annotation></semantics></math></p>
+<p>This can be rewritten as <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><msup><mi>A</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo><msub><mi>f</mi><mi>s</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>A</mi><msup><mi>e</mi><mrow><mn>2</mn><mi>π</mi><mi>i</mi><mi>ω</mi><mi>D</mi></mrow></msup><munderover><mo>∑</mo><mrow><mi>h</mi><mo>=</mo><mo>−</mo><mi>∞</mi></mrow><mi>∞</mi></munderover><msub><mi>γ</mi><mi>s</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>h</mi><mo>+</mo><mi>D</mi><mo stretchy="false" form="postfix">)</mo><msup><mi>e</mi><mrow><mo>−</mo><mn>2</mn><mi>π</mi><mi>i</mi><mi>ω</mi><mo stretchy="false" form="prefix">(</mo><mi>h</mi><mo>+</mo><mi>D</mi><mo stretchy="false" form="postfix">)</mo></mrow></msup><mo>+</mo><mi>A</mi><msup><mi>e</mi><mrow><mo>−</mo><mn>2</mn><mi>π</mi><mi>i</mi><mi>ω</mi><mi>D</mi></mrow></msup><munderover><mo>∑</mo><mrow><mi>h</mi><mo>=</mo><mo>−</mo><mi>∞</mi></mrow><mi>∞</mi></munderover><msub><mi>γ</mi><mi>s</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>h</mi><mo>−</mo><mi>D</mi><mo stretchy="false" form="postfix">)</mo><msup><mi>e</mi><mrow><mo>−</mo><mn>2</mn><mi>π</mi><mi>i</mi><mi>ω</mi><mo stretchy="false" form="prefix">(</mo><mi>h</mi><mo>−</mo><mi>D</mi><mo stretchy="false" form="postfix">)</mo></mrow></msup><mo>,</mo></mrow><annotation encoding="application/x-tex">(1+A^2)f_s(\omega)+Ae^{2\pi i \omega D}\sum_{h=-\infty}^{\infty} \gamma_s(h+D)e^{-2\pi i \omega (h+D)}+Ae^{-2\pi i \omega D}\sum_{h=-\infty}^{\infty} \gamma_s(h-D)e^{-2\pi i \omega (h-D)},</annotation></semantics></math></p>
+<p>and then simplified to <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><msup><mi>A</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo><msub><mi>f</mi><mi>s</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>A</mi><msub><mi>f</mi><mi>s</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><msup><mi>e</mi><mrow><mn>2</mn><mi>π</mi><mi>i</mi><mi>ω</mi><mi>D</mi></mrow></msup><mo>+</mo><msup><mi>e</mi><mrow><mo>−</mo><mn>2</mn><mi>π</mi><mi>i</mi><mi>ω</mi><mi>D</mi></mrow></msup><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>+</mo><msup><mi>A</mi><mn>2</mn></msup><mo>+</mo><mn>2</mn><mi>A</mi><mo>cos</mo><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mi>π</mi><mi>ω</mi><mi>D</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">)</mo><msub><mi>f</mi><mi>s</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>ω</mi><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">(1+A^2)f_s(\omega)+Af_s(\omega)(e^{2\pi i \omega D}+e^{-2\pi i \omega D})=(1+A^2+2A\cos (2\pi \omega D))f_s(\omega).</annotation></semantics></math></p>
+<p>So the spectrum actually has a periodic component, and taking a second Fourier transform means sussing out this periodicity.</p>
+<p>This means then, that MFCCs and recurrent neural networks are actually making similar assumptions about the data, or at least trying to exploit the same kind of structure. I like this similarity, especially because it suggests that thinking about the effect of previously seen data points is the “right” way to think about speech data.</p>
+</body>
+</html>
+
+  
+  </article>
+
+  </div>
+  <div class="thefooter">
+    <p>Made with Athena
+    <br><br>Copyright, <i>2016</i></p>
+  </div> <!-- footer end -->
+</body>
+</html>

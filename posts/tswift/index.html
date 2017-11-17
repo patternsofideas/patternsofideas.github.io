@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8"/>
+  <title>The &#39;New&#39; Taylor Swift: A Study &mdash; Patterns of Ideas</title>
+  <link rel="stylesheet" type="text/css" href="/static/tufte.css">
+  <link rel="stylesheet" type="text/css" href="/static/latex.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/pygments.min.css">
+  <script type="text/javascript" src="/static/enquire.min.js"></script>
+  <script type="text/javascript" src="/static/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="/static/resources.min.js"></script>
+  <script type="text/javascript" src="/static/LaTeXMathML.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='shortcut icon' href="/static/favicon.ico" type='image/x-icon'/>
+  <style type="text/css">
+   img { mix-blend-mode: multiply; }
+  </style>
+  <meta property="og:author" content="Samir Khan" />
+  <meta property="og:title" content="The &#39;New&#39; Taylor Swift: A Study" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="An analysis of Taylor Swift&#39;s music over time." />
+  <meta property="og:url" content="/posts/tswift/" />
+  <meta property="og:image" content="/static/img/athena.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="The &#39;New&#39; Taylor Swift: A Study" />
+  <meta name="twitter:description" content="An analysis of Taylor Swift&#39;s music over time." />
+  <meta name="twitter:url" content="/posts/tswift/" />
+  <meta name="twitter:image" content="/static/img/athena.png" />
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+<body>
+  <div class="thearticle">
+
+  <article>
+  
+    <h1>The &#39;New&#39; Taylor Swift: A Study</h1>
+    <p id="blog-p"><span id="blogdesc" class="marginnote">
+    A personal blog by Samir Khan<br><br>
+    <a href="/">home</a> ·
+    
+      <a href="/about/">
+        about</a>
+    </span></p>
+
+    <subtitle class="sub-date">September 19, 2017 · <span style="font-size: 1.6rem;"><a style="border-bottom-width: 0px !important;" href="/posts/tswift/">&infin;</a></span></subtitle>
+
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<p>For the first time in three years, Taylor Swift is releasing new music, and at least according to her, it’s supposed to be <em>new</em> music. In her own words, the old Taylor is dead. This post takes a look at all of her music to date and tries to figure out (with help from the Spotify API and some lyrics scraping) how it’s changed over time, and whether or not the two singles from her new album really represent a radical departure from her earlier stuff.</p>
+<p>Before we look at anything, I should be clear about exactly which songs are under consideration here: everything from the albums Taylor Swift, Fearless, Speak Now, Red, and 1989 as well as the two singles from Reputation that have been released (“Look What You Made Me Do” and “Ready For It”). The deluxe tracks from all those albums are fair game as well, except the ones from Taylor Swift because they’re not on Spotify. What’s not fair game is the music from her holiday collection or anything she recorded for a soundtrack (including “I Don’t Wanna Live Forever.”) These lines are somewhat arbitrary, but I think the albums are the best benchmarks of her evolution since they’re polished final products. Taken together, this gives 86 songs under consideration.</p>
+<p>Code for all of this can be found <a href="https://github.com/skhan1998/tswift">here</a>.</p>
+<h2 id="the-music">1. The Music</h2>
+<p>For this section, we consider only the sound of the songs, ignoring any lyrics. We quantify the sound of songs using <a href="https://developer.spotify.com/web-api/get-audio-features/">Spotify’s audio features</a>. Specifically, I took what they call the acousticness, danceability, energy, liveness, loudness, tempo, and valence for each song.</p>
+<h3 id="records-and-rankings">1.1. Records and Rankings</h3>
+<p>The first thing I did was look at the extremes: the songs that had the highest and lowest value for each of the seven features. I thought that if one of the new singles showed up on this list, it would be a sign that her music was moving in a new direction.</p>
+<table class="aligncenter" style="width:600px;height:328px;">
+<tbody>
+<tr>
+<th style="text-align:left">
+<em>Feature</em>
+</th>
+<th style="text-align:left">
+<em> Lowest</em>
+</th>
+<th style="text-align:left">
+<em>Highest</em>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+Acousticness
+</th>
+<th style="text-align:left">
+State Of Grace
+</th>
+<th style="text-align:left">
+Never Grow Up
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+Danceability
+</th>
+<th style="text-align:left">
+This Love
+</th>
+<th style="text-align:left">
+Hey Stephen
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+Energy
+</th>
+<th style="text-align:left">
+Never Grow Up
+</th>
+<th style="text-align:left">
+Haunted
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+Liveness
+</th>
+<th style="text-align:left">
+The Story Of Us
+</th>
+<th style="text-align:left">
+Better Than Revenge
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+Valence
+</th>
+<th style="text-align:left">
+This Love
+</th>
+<th style="text-align:left">
+Shake It Off
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+Tempo
+</th>
+<th style="text-align:left">
+This Love
+</th>
+<th style="text-align:left">
+Long Live
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+Loudness
+</th>
+<th style="text-align:left">
+Sad Beautiful Tragic
+</th>
+<th style="text-align:left">
+Picture To Burn
+</th>
+</tr>
+</tbody>
+</table>
+<p>But neither of them did. The two things I did notice were that “This Love” is clearly out there for her and that the only song on here that was a big hit was “Shake It Off.” Maybe extremes aren’t good for chart success.</p>
+<p>The other thing I did right off the bat was, for each feature, rank each of her full albums by the average value for that feature. This doesn’t say anything about her new music, but does give some sense of how she’s changed in the past.</p>
+<table class="aligncenter" style="width:612px;height:326px;">
+<tbody>
+<tr>
+<th style="text-align:left">
+<em>Rank</em>
+</th>
+<th style="text-align:left">
+<em> Acousticness</em>
+</th>
+<th style="text-align:left">
+<em>Danceability</em>
+</th>
+<th style="text-align:left">
+<em>Energy</em>
+</th>
+<th style="text-align:left">
+<em>Liveness</em>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+1
+</th>
+<th style="text-align:left">
+Speak Now
+</th>
+<th style="text-align:left">
+1989
+</th>
+<th style="text-align:left">
+1989
+</th>
+<th style="text-align:left">
+Speak Now
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+2
+</th>
+<th style="text-align:left">
+Taylor Swift
+</th>
+<th style="text-align:left">
+Red
+</th>
+<th style="text-align:left">
+Speak Now
+</th>
+<th style="text-align:left">
+Taylor Swift
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+3
+</th>
+<th style="text-align:left">
+Fearless
+</th>
+<th style="text-align:left">
+Fearless
+</th>
+<th style="text-align:left">
+Taylor Swift
+</th>
+<th style="text-align:left">
+Fearless
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+4
+</th>
+<th style="text-align:left">
+1989
+</th>
+<th style="text-align:left">
+Speak Now
+</th>
+<th style="text-align:left">
+Fearless
+</th>
+<th style="text-align:left">
+1989
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+5
+</th>
+<th style="text-align:left">
+Red
+</th>
+<th style="text-align:left">
+Taylor Swift
+</th>
+<th style="text-align:left">
+Red
+</th>
+<th style="text-align:left">
+Red
+</th>
+</tr>
+</tbody>
+</table>
+<table class="aligncenter" style="width:512px;height:326px;">
+<tbody>
+<tr>
+<th style="text-align:left">
+<em>Rank</em>
+</th>
+<th style="text-align:left">
+<em> Valence</em>
+</th>
+<th style="text-align:left">
+<em>Tempo</em>
+</th>
+<th style="text-align:left">
+<em>Loudness</em>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+1
+</th>
+<th style="text-align:left">
+Red
+</th>
+<th style="text-align:left">
+Taylor Swift
+</th>
+<th style="text-align:left">
+Speak Now
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+2
+</th>
+<th style="text-align:left">
+1989
+</th>
+<th style="text-align:left">
+Speak Now
+</th>
+<th style="text-align:left">
+Taylor Swift
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+3
+</th>
+<th style="text-align:left">
+Taylor Swift
+</th>
+<th style="text-align:left">
+1989
+</th>
+<th style="text-align:left">
+Fearless
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+4
+</th>
+<th style="text-align:left">
+Speak Now
+</th>
+<th style="text-align:left">
+Fearless
+</th>
+<th style="text-align:left">
+1989
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+5
+</th>
+<th style="text-align:left">
+Fearless
+</th>
+<th style="text-align:left">
+Red
+</th>
+<th style="text-align:left">
+Red
+</th>
+</tr>
+</tbody>
+</table>
+<p>What really stood out to me here was that Red and 1989 nearly always appeared next to each other, with two exceptions: tempo, where they were separated by Fearless, and Energy, where they appeared on opposite ends of the list! So there’s something going on here where Red and 1989 are very similar, but different in some key way (a way that’s captured by the energy feature).</p>
+<p>Also, in the acousticness and liveness features, the albums generally go from old to new, which is to be expected since her music became more manufactured over time.</p>
+<h3 id="visualization">1.2. Visualization</h3>
+<p>To get a feel for the data set as a whole, I found a two-dimensional representation using <a href="https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding#cite_note-3">t-SNE</a>. Here’s a plot (with song names truncated at 15 characters to improve readability):</p>
+<p><img src="/static/img/tswift/tswift_album.png" alt="Histogram" style="width: 1000px;"/></p>
+<p>That plot is pretty tough to read even with the truncation, so <a href="../../static/img/tswift/tswift_album.pdf">here’s a PDF</a> that should be more accessible, especially if you zoom in.</p>
+<p>In this graph, you can clearly see that 1989 is her most consistent album (there’s 10 songs in a relatively small area), followed by Red. Her first album on the other hand is all over the place. So, interpreted with some generosity, the graph shows her developing a sense of style over time.</p>
+<p>Looking more closely at the area 1989 is concentrated in, I noticed two things. One is that this area also contains a lot of her big hits, like “You Belong With Me,” “We Are Never Ever Getting Back Together” and “Mine.” But more notably, it also contains both of the new singles! In two dimensions, Taylor Swift’s new music is indistinguishable from her old music.</p>
+<h3 id="clustering">1.3 Clustering</h3>
+<p>To make concrete the notions of clusters in the previous section, I did some clustering. Specifically, I ran k-means on the seven dimensional points and then visualized the results in a plot similar to the previous ones. I chose to look at 2 and 5 clusters, hoping that they would correspond to the old Taylor/new Taylor and her 5 full albums, respectively.</p>
+<p>The two clusters respect the structure in the visualization almost exactly:</p>
+<p><img src="/static/img/tswift/cluster2.png" alt="Histogram" style="width: 1000px;"/></p>
+<p><a href="../../static/img/tswift/cluster2.pdf">Here’s the PDF</a>. What’s more important is how this clustering interacts with the albums, which can be seen in this graph:</p>
+<p><img src="/static/img/tswift/cluster2bar.png" alt="Histogram" style="width: 75%;"/></p>
+<p>This isn’t too informative. We’d hope that one of the clusters increases steadily from album to album, but the ratios seem to be roughly constant. Let’s recreate these same two graphs with 5 clusters:</p>
+<p><img src="/static/img/tswift/cluster5scatter.png" alt="Histogram" style="width: 1000;"/></p>
+<p><img src="/static/img/tswift/cluster5.png" alt="Histogram" style="width: 75%;"/></p>
+<p>Again, <a href="../../static/img/tswift/cluster5scatter.pdf">the PDF</a>. These graphs tell a much more interesting story: the first three albums are acoustically scattershot, drawing roughly equally from all the clusters. Then, in Red, she seems to split, toying equally with clusters 0 and 1. Between the two of them, it’s cluster 1 that wins out, and forms the bulk of 1989, with some small appearances from the others. And (as expected based on our earlier observations), the songs so far from Reputation also fit into cluster 5, making them nothing too new.</p>
+<p>It’s worth taking a second to translate back from “clusters” to more meaningful terms. Looking at the scatter plot, cluster 0 seems to correspond to upbeat pop songs (like “Red” and “Shake It Off”) while cluster 1 has slower, mellower, songs (like “The Lucky One” and “Teardrops on My Guitar”). And on Red, all of the hit songs were from cluster 0, not cluster 1, maybe explaining her decision to switch over for her next album.</p>
+<p>(The other clusters are harder to interpret, but if you figure anything out, let me know!)</p>
+<p><span class="marginnote"><img src="/static/img/tswift/tswift_wc.png" alt="Histogram" style="width: 500px;"/></span> <span class="marginnote"><img src="/static/img/tswift/speaknow_wc.png" alt="Histogram" style="width: 500px;"/></span> <span class="marginnote"><img src="/static/img/tswift/fearless_wc.png" alt="Histogram" style="width: 500px;"/></span> <span class="marginnote"><img src="/static/img/tswift/red_wc.png" alt="Histogram" style="width: 500px;"/></span> <span class="marginnote"><img src="/static/img/tswift/1989_wc.png" alt="Histogram" style="width: 500px;"/></span></p>
+<h2 id="the-lyrics">2. The Lyrics</h2>
+<p>As any avid Taylor Swift fan knows though, the real meat of her songs is in the lyrics, so I turned to those next. Thankfully, most of the scraping work had <a href="https://github.com/irenetrampoline/taylor-swift-lyrics">already been done</a>, so I just piggy-backed off that.</p>
+<h3 id="word-clouds">2.1. Word Clouds</h3>
+<p>I started by making word clouds for each of her full albums, as shown in the margin, just because it was easy and cute. They’re shown in the margin.</p>
+<h3 id="topic-models">2.2. Topic Models</h3>
+<p>For more substantive analysis, I fit a topic model to the collection of lyrics. I tried <a href="https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation">latent Dirichlet allocation</a> and <a href="https://en.wikipedia.org/wiki/Non-negative_matrix_factorization">non-negative matrix factorization</a>, with the latter giving better results. Somewhat arbitrarily, I fit models with 5 topics. Here is, for each of the 5 topics the model found, the top 20 words:</p>
+<ul>
+<li><em>Topic #1:</em> love beautiful cause back baby time say way everything one home take eyes smile feel right better could little well</li>
+<li><em>Topic #2:</em> come back movie would gone sinks york miss could figured leave today spelling guess feeling dream new somethings somehow id</li>
+<li>Topic #3:</em> stay mad hey palm time lock quite want easy lovin hand grow funny late people let beautiful say best well</li>
+<li>Topic #4:</em> ever ooh talk together getting 22 friends grow back telling yeah nights feels alright mean called remember night used one</li>
+<li><em>Topic #5:</em> girl thats works trying want strong alone ever everybody worse yeah knows forever goes wait heart would place get rain</li>
+</ul>
+<p>These aren’t too easy to make sense of, so let’s bring in some visualizations. First, treating the percentage contribution of each topic to a song as a feature, I used t-SNE to visualize the songs again:</p>
+<p><img src="/static/img/tswift/tswift_lyric_albums.png" alt="Histogram" style="width: 1000;"/></p>
+<p>Another tough to read plot, so here’s <a title="tswift_lyric_albums" href="https://patternsofideas.files.wordpress.com/2017/09/tswift_lyric_albums.pdf">the PDF</a>. The relatively clusters are pretty promising, as is the fact that 1989 is again the most tightly clustered album - it’s both acoustically and thematically unified. The big swath through the bottom has a lot of canonical Taylor Swift love songs (“Fifteen” and “Speak Now” for example) that definitely belong together, but it’s not clear why something like “The Story of Us” was pushed off to the other cluster, since it’s clearly a love song as well.</p>
+<p>But it turns out that this plot is a little misleading. If we recolor it by dominant topic (i.e. a songs color is determined by the topic that contributes most heavily to it), we get a different story:</p>
+<p><img src="/static/img/tswift/topic_scatter.png" alt="Histogram" style="width: 1000;"/></p>
+<p>(<a href="../../static/img/tswift/topic_scatter.pdf">The PDF.</a>) Now it’s clear that (as many people correctly conclude without any analysis at all) nearly all of her songs are predominantly love songs drawing from Topic 1, and the clusters found by t-SNE are mostly artificial.</p>
+<p>It’s interesting to look at the songs that aren’t dominated by this topic. A couple of them are clearly not love songs (“Welcome to New York” and “22”) but some are clearly love songs that the model misinterpreted. For example, the scatter plot suggests that the model put “Stay Stay Stay” and “All You Had To Do Was Stay” together into a topic of songs about staying, and looking at the key words from the topic confirms this.</p>
+<p>Similarly, topic 5 picked up on the word “girl” in both “How You Get The Girl” and “Girl At Home,” as well as a line from the chorus of “A Place In This World” and thrust those together.</p>
+<p>None of these other topics picked up on the new singles though. They are, at least according to the model, standard Taylor Swift songs.</p>
+<p>I had hoped that the model would be able to separate, for example, songs about falling in love and songs about breaking up, but some combination of short songs and non-distinctive vocabulary prevents this from happening.</p>
+<p>For one last graph, I plotted the topic composition across albums:</p>
+<p><img src="/static/img/tswift/topic_bar.png" alt="Histogram" style="width: 500;"/></p>
+<p>Obviously this graph is a little suspect because of the issues I mentioned above, but it does suggest that the canonical “Taylor Swift love song” became significantly less important to her work as she aged, in parallel with her shift toward more pop music.</p>
+<h2 id="conclusion">3. Conclusion</h2>
+<p>Based on both the audio and lyrics of her songs, there’s a clear pivot of some kind in Taylor Swift’s music as she moved away from her country roots. But there’s no reason to believe that that shift continues in her new work, which is extremely similar to 1989. Contrary to what she’d have us believe, the old Taylor isn’t dead at all.</p>
+</body>
+</html>
+
+  
+  </article>
+
+  </div>
+  <div class="thefooter">
+    <p>Made with Athena
+    <br><br>Copyright, <i>2016</i></p>
+  </div> <!-- footer end -->
+</body>
+</html>

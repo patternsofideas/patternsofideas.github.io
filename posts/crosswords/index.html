@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Q&amp;A With the NYT Crossword Archive &mdash; Patterns of Ideas</title>
+  <link rel="stylesheet" type="text/css" href="/static/tufte.css">
+  <link rel="stylesheet" type="text/css" href="/static/latex.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/pygments.min.css">
+  <script type="text/javascript" src="/static/enquire.min.js"></script>
+  <script type="text/javascript" src="/static/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="/static/resources.min.js"></script>
+  <script type="text/javascript" src="/static/LaTeXMathML.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='shortcut icon' href="/static/favicon.ico" type='image/x-icon'/>
+  <style type="text/css">
+   img { mix-blend-mode: multiply; }
+  </style>
+  <meta property="og:author" content="Samir Khan" />
+  <meta property="og:title" content="Q&amp;A With the NYT Crossword Archive" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="Some analysis of the NYT crossword archive." />
+  <meta property="og:url" content="/posts/crosswords/" />
+  <meta property="og:image" content="/static/img/athena.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Q&amp;A With the NYT Crossword Archive" />
+  <meta name="twitter:description" content="Some analysis of the NYT crossword archive." />
+  <meta name="twitter:url" content="/posts/crosswords/" />
+  <meta name="twitter:image" content="/static/img/athena.png" />
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+<body>
+  <div class="thearticle">
+
+  <article>
+  
+    <h1>Q&amp;A With the NYT Crossword Archive</h1>
+    <p id="blog-p"><span id="blogdesc" class="marginnote">
+    A personal blog by Samir Khan<br><br>
+    <a href="/">home</a> ·
+    
+      <a href="/about/">
+        about</a>
+    </span></p>
+
+    <subtitle class="sub-date">June 15, 2017 · <span style="font-size: 1.6rem;"><a style="border-bottom-width: 0px !important;" href="/posts/crosswords/">&infin;</a></span></subtitle>
+
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h2 id="introduction">1. Introduction</h2>
+<p>I’ve been doing a lot of crosswords lately, so I thought I’d spend some time playing around with old crosswords to see if there was anything interesting to say about them. This whole post is structured as a series of questions I or other people asked, which I then answered using data from <a href="https://github.com/doshea/nyt_crosswords">this repository</a>. If there’s anything not covered here you’d like to know about, feel free to get in touch with me!</p>
+<p>Just for reference, there are 1229405 clue/answer pairs, taken from 14524 puzzles. After throwing out duplicates, there are 140628 distinct answers, and 696050 distinct clues.</p>
+<h2 id="the-words">2. The Words</h2>
+<p><strong>Question.</strong> <em>What are the most common words?</em></p>
+<p>It turns out that these are almost exclusively short, vowel-rich words, with the top 5 being:</p>
+<table style="width:450px;height:246px;">
+<tbody>
+<tr>
+<th style="text-align:left">
+<em><strong>Word</strong></em>
+</th>
+<th style="text-align:left;">
+<em><strong>Occurrences</strong></em>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>AREA</strong>
+</th>
+<th style="text-align:left">
+<strong>894</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>ERA</strong>
+</th>
+<th style="text-align:left">
+<strong>880</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>ERIE</strong>
+</th>
+<th style="text-align:left">
+<strong>818</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>ERE</strong>
+</th>
+<th style="text-align:left">
+<strong>750</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>ALOE</strong>
+</th>
+<th style="text-align:left">
+<strong>723</strong>
+</th>
+</tr>
+</tbody>
+</table>
+<p>These aren’t especially interesting, so I then filtered by length i.e. found the most common word of each length. They’re a bit unwieldy to format here, but you can see them all <a href="../../static/img/crosswords/common_words.pdf">here</a>. The smaller ones are still boring, but the longer ones are cute, and the sudden uptick in frequencies for the final block is especially helpful: there just aren’t that many very long words appearing in crosswords, it seems.</p>
+<p><strong>Question.</strong> <em>What is the longest word?</em></p>
+<p>This turns out to be a bit tricky to answer: doing the obvious sorting gives the answer of:</p>
+<p>“TENNINEEIGHTSEVENSIXFIVEFOURTHREETWOONEITSTWOOOTWO,”</p>
+<p>which is from the 12/30/2001 puzzle, which I couldn’t find a copy of. The second longest is the theme answer from <a href="http://rexwordpuzzle.blogspot.com/2008/12/sunday-dec-21-2008-elizabeth-gorski-bug.html">this puzzle</a>, which makes it clear that the previous one was probably a rebus too.</p>
+<p>If you don’t count a rebus answer (which is reasonable), then there’s a whole slew of 23 letter words coming from a time when the Sunday was 23 by 23. If you don’t want to count those either, then you’re left with the pile of 21 letter words that span modern Sunday grids.</p>
+<p><strong>Question.</strong> <em>What word has the most distinct clues?</em></p>
+<p>The answer here turns out to be for the most part, the same as the common words:</p>
+<table style="width:450px;height:250px;">
+<tbody>
+<tr>
+<th style="text-align:left">
+<em><strong>Word</strong></em>
+</th>
+<th style="text-align:left">
+<em><strong>Distinct Clues</strong></em>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>ERA</strong>
+</th>
+<th style="text-align:left">
+<strong>462</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>ERIE</strong>
+</th>
+<th style="text-align:left">
+<strong>439</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>ONE</strong>
+</th>
+<th style="text-align:left">
+<strong>432</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>ARIA</strong>
+</th>
+<th style="text-align:left">
+<strong>424</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>ORE</strong>
+</th>
+<th style="text-align:left">
+<strong>405</strong>
+</th>
+</tr>
+</tbody>
+</table>
+<p>Just to take a peek under the hood, all of the distinct clues for ERA can be seen <a href="../../static/img/crosswords/clues-for-era.pdf">here</a>., and they seem to fall into three categories:</p>
+<ol style="list-style-type: decimal">
+<li>ERA like the time period</li>
+<li>ERA like the baseball statistic</li>
+<li>ERA like the Equal Rights Amendment</li>
+</ol>
+<p>So, on a spiritual level, there’s only 3 clues for ERA. On the other hand, ONE actually has many meaningfully different clues, all of which are listed <a href="../../static/img/crosswords/clues-for-one.pdf">here</a>. I wish there was some way to capture this sense of “spiritually different clues” and then find the answer with the most “spiritually diverse” clues, but I can’t think of a good algorithmic way to do it.</p>
+<p><strong>Question.</strong> <em>What words have very few distinct clues?</em></p>
+<p>I arbitrarily chose to look at words that are in the 10000 most common words but have fewer than 5 clues. The 5 most common (although there are only 9 in total) are:</p>
+<table style="width:450px;height:250px;">
+<tbody>
+<tr>
+<th style="text-align:left">
+<strong><em>Word</em></strong>
+</th>
+<th style="text-align:left">
+<strong><em>Occurrences</em></strong>
+</th>
+<th style="text-align:left">
+<strong><em>Clues</em></strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>ORAD</strong>
+</th>
+<th style="text-align:left">
+<strong>60</strong>
+</th>
+<th style="text-align:left">
+<strong>4</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>AVISO</strong>
+</th>
+<th style="text-align:left">
+<strong>38</strong>
+</th>
+<th style="text-align:left">
+<strong>4</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>BRAC</strong>
+</th>
+<th style="text-align:left">
+<strong>32</strong>
+</th>
+<th style="text-align:left">
+<strong>2</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>HADON</strong>
+</th>
+<th style="text-align:left">
+<strong>31</strong>
+</th>
+<th style="text-align:left">
+<strong>4</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>OEN</strong>
+</th>
+<th style="text-align:left">
+<strong>29</strong>
+</th>
+<th style="text-align:left">
+<strong>4</strong>
+</th>
+</tr>
+</tbody>
+</table>
+<p>The occurrences column basically shows that for a word to have fewer than 5 distinct clues, it really can’t appear all that often. If it does, it ends up having at least technically diverse clues, like those for ERA.</p>
+<p><strong>Question.</strong> <em>How has the popularity of words changed over time?</em></p>
+<p>I plotted this for 10 common words - there don’t seem to be any appreciable trends.</p>
+<p><img src="/static/img/crosswords/crosswords_over_time.png" alt="Histogram" style="width: 750px;"/></p>
+<p><strong>Question.</strong> <em>How does the distribution of letters in crossword answers compare to in normal English?</em></p>
+<p>One graph shows it all:</p>
+<p><img src="/static/img/crosswords/diffs.png" alt="Histogram" style="width: 600px;"/></p>
+<p>Some of these make sense: A and E are over-represented because it’s easy to fill in grids with them. Others make no sense at all: why is H so under-represented?</p>
+<p><strong>Question.</strong> <em>What are the hardest words?</em></p>
+<p>Well, first you have to come up with some way to measure difficulty: I assigned values of 1, 2, 3, 4, 5, 6, 4 to the days of the week in order, keeping with the conventional wisdom that Sunday is about as hard as Thursday. Here are the 5 words from the 10,000 most common words that had the highest average value:</p>
+<table style="width:350px;height:250px;">
+<tbody>
+<tr>
+<th style="text-align:left">
+<strong><em>Word</em></strong>
+</th>
+<th style="text-align:left">
+<strong><em>Occurrences</em></strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>ONLEAVE</strong>
+</th>
+<th style="text-align:left">
+<strong>4.97</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>ALACARTE</strong>
+</th>
+<th style="text-align:left">
+<strong>4.93</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>OPALINE</strong>
+</th>
+<th style="text-align:left">
+<strong>4.85</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>ETAMINE</strong>
+</th>
+<th style="text-align:left">
+<strong>4.79</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>ONEONEONE</strong>
+</th>
+<th style="text-align:left">
+<strong>4.78</strong>
+</th>
+</tr>
+</tbody>
+</table>
+<h2 id="the-clues">3. The Clues</h2>
+<p><strong>Question.</strong> <em>What are the most common clues?</em></p>
+<p>No real pattern to these:</p>
+<table style="width:350px;height:250px;">
+<tbody>
+<tr>
+<th style="text-align:left">
+<strong><em>Clue</em></strong>
+</th>
+<th style="text-align:left">
+<strong><em>Occurrences</em></strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>Concerning</strong>
+</th>
+<th style="text-align:left">
+<strong>317</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>Jai ___</strong>
+</th>
+<th style="text-align:left">
+<strong>256</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>Greek letter</strong>
+</th>
+<th style="text-align:left">
+<strong>250</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>Chemical suffix</strong>
+</th>
+<th style="text-align:left">
+<strong>225</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>Gaelic</strong>
+</th>
+<th style="text-align:left">
+<strong>216</strong>
+</th>
+</tr>
+</tbody>
+</table>
+<p>It’s interesting to look at the answers these clues point to: “Concerning” has a handful, “Jai” has only one (ALAI), “Greek letter” and “Chemical suffix” both have a decent mix again, and “Gaelic” is only ever a clue for ERSE.</p>
+<p><strong>Question.</strong> <em>What are clues that have many distinct answers?</em></p>
+<p>I’m not going to give a list of the top results here, because many of them are things like “See 17-Across” or “Theme of this puzzle,” which are not very interesting. Two results that are in the right vein though, are “Split” and “Nonsense”, which have 47 and 40 possible answers respectively, that are listed out <a href="../../static/img/crosswords/split.pdf">here</a> and <a href="../../static/img/crosswords/nonsense.pdf">here</a>.</p>
+<p><strong>Question.</strong> <em>What are clues that have only one answer?</em></p>
+<p>There are tons of these. A small sample:</p>
+<table style="width:350px;height:250px;">
+<tbody>
+<tr>
+<th style="text-align:left">
+<strong><em>Clue</em></strong>
+</th>
+<th style="text-align:left">
+<strong><em>Occurrences</em></strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>___-majesté</strong>
+</th>
+<th style="text-align:left">
+<strong>143</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>___ avis</strong>
+</th>
+<th style="text-align:left">
+<strong>132</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>Dies ___</strong>
+</th>
+<th style="text-align:left">
+<strong>132</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>Sri ___</strong>
+</th>
+<th style="text-align:left">
+<strong>102</strong>
+</th>
+</tr>
+<tr>
+<th style="text-align:left">
+<strong>__-Magnon</strong>
+</th>
+<th style="text-align:left">
+<strong>98</strong>
+</th>
+</tr>
+</tbody>
+</table>
+Note that I’m omitting “Jai ___” and “Gaelic” for variety’s sake. As suggested by this sample, nearly all of the one-answer clues are fill in the blanks, which makes sense.
+<h3>
+<strong>3. The Days</strong>
+</h3>
+<p><strong>Question. </strong><em>How does the length of words vary over the week?</em> Not much, as it turns out:</p>
+<p><img src="/static/img/crosswords/length_by_day.png" alt="Lengths by days" style="width: 600px;"/></p>
+<p><strong>Question.</strong> <em>How does the frequency of puns vary over the week?</em></p>
+<p>A lot, as it turns out:</p>
+<p><img src="/static/img/crosswords/puns_days.png" alt="Puns by days" style="width: 600px;"/></p>
+<p><strong>Question.</strong> <em>How does the density of vowels vary over the week?</em></p>
+<p>And we’re back to not much:</p>
+<p><img src="/static/img/crosswords/vowels_days.png" alt="Vowels by days" style="width: 600px;"/></p>
+<p>So it seems like puns best capture the difficulty gradient of the week.</p>
+<h2 id="the-years">4. The Years</h2>
+<p><strong>Question.</strong> <em>How does the length of words vary over the years?</em></p>
+<p>In strange and inconsistent ways:</p>
+<p><img src="/static/img/crosswords/year_length.png" alt="Lengths by year" style="width: 600px;"/></p>
+<p>One fact that may be relevant: Will Shortz began editing the puzzle in 1993. I’m not sure if this explains the jump, but it’s certainly a compelling story.</p>
+<p><strong>Question.</strong> <em>How does the frequency of puns vary over the years?</em></p>
+<p>People love them more every year:</p>
+<p><img src="/static/img/crosswords/puns_years.png" alt="Puns by years" style="width: 600px;"/></p>
+<p>It’s interesting to note that there’s still a spike in the mid-90s, but this spike comes 2-3 years after Shortz became editor.</p>
+<p><strong>Question.</strong> <em>How does the density of vowels vary over the years?</em></p>
+<p>Basically the opposite of the puns:</p>
+<p><img src="/static/img/crosswords/vowels_years.png" alt="Vowels by year" style="width: 600px;"/> Again, the huge drop occurs when Shortz takes over.</p>
+</body>
+</html>
+
+  
+  </article>
+
+  </div>
+  <div class="thefooter">
+    <p>Made with Athena
+    <br><br>Copyright, <i>2016</i></p>
+  </div> <!-- footer end -->
+</body>
+</html>
