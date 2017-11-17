@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title type="text">Patterns of Ideas</title>
   <id>http://localhost/</id>
-  <updated>2017-09-19T00:00:00Z</updated>
+  <updated>2017-11-17T00:00:00Z</updated>
   <link href="http://localhost/" />
   <link href="http://localhost/" rel="self" />
   <subtitle type="text">Patterns of Ideas Atom Feed</subtitle>
@@ -1165,6 +1165,53 @@ Note that I’m omitting “Jai ___” and “Gaelic” for variety’s sake. As
 &lt;p&gt;&lt;strong&gt;Question.&lt;/strong&gt; &lt;em&gt;How does the density of vowels vary over the years?&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Basically the opposite of the puns:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/static/img/crosswords/vowels_years.png&quot; alt=&quot;Vowels by year&quot; style=&quot;width: 600px;&quot;/&gt; Again, the huge drop occurs when Shortz takes over.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</content>
+  </entry>
+  <entry xml:base="http://localhost/">
+    <title type="text">The Limits of Math</title>
+    <id>http://localhost/posts/usefulmath</id>
+    <updated>2017-11-17T00:00:00Z</updated>
+    <published>2017-11-17T00:00:00Z</published>
+    <link href="http://localhost/posts/usefulmath" />
+    <author>
+      <name>Samir Khan</name>
+    </author>
+    <content type="html">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head&gt;
+  &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+  &lt;meta http-equiv=&quot;Content-Style-Type&quot; content=&quot;text/css&quot; /&gt;
+  &lt;meta name=&quot;generator&quot; content=&quot;pandoc&quot; /&gt;
+  &lt;title&gt;&lt;/title&gt;
+  &lt;style type=&quot;text/css&quot;&gt;code{white-space: pre;}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;blockquote&gt;
+&lt;p&gt;“The miracle of the appropriateness of the language of mathematics for the formulation of the laws of physics is a wonderful gift which we neither understand nor deserve. We should be grateful for it and hope that it will remain valid in future research and that it will extend, for better or for worse, to our pleasure, even though perhaps also to our bafflement, to wide branches of learning.” - Eugene Wigner&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I haven’t done the experiment myself, but I’d be willing to bet that if you asked people to tell you one thing they know about math, not a mathematical fact, but a thing about math as a field, the overwhelming response you’d get is that math is useful. This is the answer that protesting high-schoolers hear, and probably also the only thing many of them carry all the way from math class to adulthood. Fundamentally, we think of math as a tool for solving problems in other fields.&lt;span&gt;&lt;label for=&quot;sn-1&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-1&quot; class=&quot;margin-toggle&quot;/&gt;&lt;span class=&quot;sidenote&quot;&gt;Which is not to say that this is the point of math - in fact, this misses the point of math almost entirely. But it is the general opinion.&lt;br /&gt;
+&lt;br /&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;And who can blame us for believing this? For everyone except working mathematicians, math is a tool. Physicists and chemists don’t care about math; they care about physics and chemistry. But they use math because it is useful in understanding those fields, and the same is true in other cases. How or why is it so useful?&lt;/p&gt;
+&lt;p&gt;On a basic level, the answer is that it correctly captures certain abstractions about the real world. In the language of word problems, if you have 5 apples and eat 3 of them, the mathematical equation 5-3=2 (that abstracts your apples into numbers!) correctly reflects the relation between how many apples you had, how many you ate, and how many you have now. The correspondence of apples to numbers and arithmetic to consumption is exact.&lt;/p&gt;
+&lt;p&gt;But this can’t be the entire story, since there are cases where the correspondence is weaker but the methods are more, not less, powerful. In physics, the abstraction of a moving body to a moving particle, and the resulting reduction of the problem of determining speed given position to the problem of differentiation, contains a string of unrealistic assumptions: physical objects are not points; it isn’t actually possible to measure a velocity or position exactly at any time; there are forces not accounted for by simple kinematic models. The formal relationship between velocity and position is exclusively formal and even though it has some physical interpretation, that interpretation is not nearly as precise as the literal interpretation of a number of apples. But the predictions of this model e.g. the path taken by a thrown ball, are reasonably accurate, despite the fact that the math no longer matches up exactly.&lt;/p&gt;
+&lt;p&gt;Maybe the greatest failure of math to match up to the real world, while still succeeding as an analytic tool, is in machine learning. A classic toy problem in this field is automatic recognition of handwritten digits. One approach to this problem might go something like this: each digit corresponds to a set of probabilities on the pixels, where each probability tells you how likely it is that a given pixel will be black in an image of that digit. So if there are 10,000 pixels in the image and 10 digits, all I need to do is for each of the ten digits, estimate these 10,000 probabilities. When you show me a new image, I can look which pixels are black and calculate, for each of the 10 digits, the probability that it is an image of the digit, then guess the most likely one.&lt;/p&gt;
+&lt;p&gt;The problem is that the act of drawing a handwritten digit has absolutely nothing to do with selecting pixels to color in black. Nevertheless, by playing pretend and working with this mathematical structure, we can correctly identify handwritten digits. Increasingly suspect applications of mathematical tools give only grander results: speech recognition, image categorization, text processing, to name a few.&lt;/p&gt;
+&lt;p&gt;It’s not clear at all why math continues to work in these settings, where the abstractions used are inappropriate to the point of irrelevance. It works because it works. This is troubling though, especially because it raises the possibility that eventually it will stop working, and we will be left scratching our heads. More specifically, the putative goal of machine learning as a field is to develop some kind of artificial general intelligence (AGI). But if we don’t understand why math has been able to facilitate all of the successes of machine learning to date, how do we know it will facilitate AGI?&lt;/p&gt;
+&lt;p&gt;Let’s abstract this away a bit: we have a sequence of problems (machine learning tasks), each successively harder than the last, and a tool (math) that has worked on all the problems to date. How do we know the tool will continue to work on new problems (how do we know that the current line of ML research will actually plausibly yield an AGI eventually)?&lt;/p&gt;
+&lt;p&gt;A reasonable model is to assume that our tool only works on certain kinds of problems, and so we need to decide whether the new problem is of the same kind as the old ones. If it is, we can reasonably hope that our tool will continue to work; if it is not, then maybe our tool was specific to the kinds of problems we had before, and will not give good results on this new problem.&lt;/p&gt;
+&lt;p&gt;The bad news is that all we’ve done is recast our original question as the new question of defining a “kind” of problems. The good news is that we don’t have to give a comprehensive answer to this new question - just some criteria for determining when a new problem is of the same kind as old ones. For example, it seems reasonable to believe that if I have a problem, solve it, then move on to considering a generalization or variant of the original problem, that I should expect to tackle this generalization or variant in the same way as the original problem. That is, academically, when one problem in a field points to another through its statement or resolution, it is likely those two problems will be of the same kind.&lt;/p&gt;
+&lt;p&gt;In some cases, this is a relief. In the essay quoted at the beginning, Wigner mentions uniting quantum theories and relativity as something that may just be mathematically impossible to work out. But the physicists only got to this problem through incremental progress, through one problem pointing to the next, so maybe they can rest easy that they just need to get the math right.&lt;span&gt;&lt;label for=&quot;sn-2&quot; class=&quot;margin-toggle sidenote-number&quot;&gt;&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;sn-2&quot; class=&quot;margin-toggle&quot;/&gt;&lt;span class=&quot;sidenote&quot;&gt;I am assuming there’s no danger of falling of a cliff, so to speak. You can take as many of these steps as you want, and stay within the kind.&lt;br /&gt;
+&lt;br /&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Unfortunately, I would argue that this is not the case in machine learning. Although the problem of unifying field theories with gravity in physics is analogous to the problem of developing general AI in machine learning in the sense that they are both major underlying goals for their respective fields, the former problem is very different from the latter in the sense that it was arrived at by repeated pointing of one problem to the next, as opposed to being a goal from the start that is independent of any of the things actually being done in the field.&lt;/p&gt;
+&lt;p&gt;Abandoning the abstract model for a second, GAI is hard. It is not only hard, but also fundamentally different from all of the problems of image classification and speech recognition being worked on by machine learning researchers today. There is no natural sequence of these problems that leads to GAI, and so it might be a new kind of problem all together. In particular, it may not even be possible with mathematical tools.&lt;/p&gt;
+&lt;p&gt;This argument is more compelling if we imagine a slightly more sophisticated tool that can give better feedback than just success or failure. If our tool can tell us how suited it is to the problem, we can use this as a thermostat of sorts. Encountering problems to which the tool is increasingly unsuited, tells us we are in danger of venturing out of the kinds of problems the tool can solve. Note that this feedback is not just how hard it was to solve the problem with the tool, since it could be the problems themselves getting harder. This should be the kind of feedback that a toddler gets when ramming a square peg into a circular hole.&lt;/p&gt;
+&lt;p&gt;In machine learning, where the tool is math, the closest thing there is to this feedback is the elegance of the math being used. And in modern machine learning, the math is not elegant at all. It’s a mess of matrices and gradients, filled with empirical evidence but no theoretical guarantees. So there’s an argument to be made that since the math is so messy for these tasks, which are themselves so far removed from GAI, just doing more and more sophisticated math isn’t going to get us a GAI.&lt;/p&gt;
+&lt;p&gt;There are certainly counterarguments to this. One is that we can inform our design of machine learning algorithms by human biology, as is the case with neural networks. Then, since we’re building something that approximates an actual GAI, we should be on the right track. Another is that we basically have no better ideas: all our eggs are in the math basket, and there isn’t even another basket to start exploring, so we should just plow in.&lt;/p&gt;
+&lt;p&gt;It’s because of these counterarguments (and the many impressive results already achieved) that I don’t want to say that we should only be using math to count apples and abandon it the instant it becomes unrealistic. But I do think we should be aware of the gap between the math we do and the non-mathematical world it models, and especially aware of how realistic our goals are in light of this gap.&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </content>
