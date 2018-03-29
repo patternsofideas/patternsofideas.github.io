@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Chernoff Faces &mdash; Patterns of Ideas</title>
+  <link rel="stylesheet" type="text/css" href="/static/tufte.css">
+  <link rel="stylesheet" type="text/css" href="/static/latex.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/pygments.min.css">
+  <script type="text/javascript" src="/static/enquire.min.js"></script>
+  <script type="text/javascript" src="/static/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="/static/resources.min.js"></script>
+  <script type="text/javascript" src="/static/LaTeXMathML.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='shortcut icon' href="/static/favicon.ico" type='image/x-icon'/>
+  <style type="text/css">
+   img { mix-blend-mode: multiply; }
+  </style>
+  <meta property="og:author" content="Samir Khan" />
+  <meta property="og:title" content="Chernoff Faces" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="A detailed description of the algorithm for constructing Chernoff faces." />
+  <meta property="og:url" content="/posts/chernoff/" />
+  <meta property="og:image" content="/static/img/athena.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chernoff Faces" />
+  <meta name="twitter:description" content="A detailed description of the algorithm for constructing Chernoff faces." />
+  <meta name="twitter:url" content="/posts/chernoff/" />
+  <meta name="twitter:image" content="/static/img/athena.png" />
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+<body>
+  <div class="thearticle">
+
+  <article>
+  
+    <h1>Chernoff Faces</h1>
+    <p id="blog-p"><span id="blogdesc" class="marginnote">
+    A personal blog by Samir Khan<br><br>
+    <a href="/">home</a> ·
+    
+      <a href="/about/">
+        about</a>
+    </span></p>
+
+    <subtitle class="sub-date">March 26, 2018 · <span style="font-size: 1.6rem;"><a style="border-bottom-width: 0px !important;" href="/posts/chernoff/">&infin;</a></span></subtitle>
+
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<p>I heard about Chernoff faces a few days ago through <a href="https://news.ycombinator.com/item?id=16663396">a post on Hacker News</a>, and immediately had the same question as several people in the comments: how exactly are the data being mapped to these faces? Surprisingly, I wasn’t able to find a detailed description anywhere online except in an appendix of <a href="https://www.jstor.org/stable/2284077?seq=1#page_scan_tab_contents">Chernoff’s original paper</a>. That appendix is fairly terse, so this post is meant to be a more clear and explicit explanation of how the faces are made and how they can be interpreted.</p>
+<h2 id="chernoffs-construction">1. Chernoff’s Construction</h2>
+<p>The specific construction in the original paper considers eighteen variables, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mi>⋯</mi><mo>,</mo><msub><mi>x</mi><mn>18</mn></msub></mrow><annotation encoding="application/x-tex">x_1,\cdots, x_{18}</annotation></semantics></math>, and builds a face based on these eighteen numbers. We go through these eighteen parameters, describing the effect each has on the final face.</p>
+<p>The first five parameters control the overall shape of the face. Of these, the first three provide the underlying skeleton shown below.</p>
+<p><img src="/static/img/skeleton.png" alt="skeleton"></p>
+<p>Here, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>O</mi><annotation encoding="application/x-tex">O</annotation></semantics></math> is the center of the face. The parameters <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_1, x_2</annotation></semantics></math> (the latter of which is an angle from the horizontal) specify a point <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>P</mi><annotation encoding="application/x-tex">P</annotation></semantics></math> that is the corner of the face. The reflection of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>P</mi><annotation encoding="application/x-tex">P</annotation></semantics></math> across the vertical through <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>O</mi><annotation encoding="application/x-tex">O</annotation></semantics></math> is the other corner of the face, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>′</mi></mrow><annotation encoding="application/x-tex">P&#39;</annotation></semantics></math>. The parameter <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>3</mn></msub><annotation encoding="application/x-tex">x_3</annotation></semantics></math> is the length of the face, and specifies the topmost point <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>U</mi><annotation encoding="application/x-tex">U</annotation></semantics></math> of the face. The reflection of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>U</mi><annotation encoding="application/x-tex">U</annotation></semantics></math> about the horizontal through <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>O</mi><annotation encoding="application/x-tex">O</annotation></semantics></math> is the lowermost point of the face, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>L</mi><annotation encoding="application/x-tex">L</annotation></semantics></math>.</p>
+<p>The next two, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>4</mn></msub><annotation encoding="application/x-tex">x_4</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>5</mn></msub><annotation encoding="application/x-tex">x_5</annotation></semantics></math> provide the overall shape of the face by defining its boundary. That boundary consists of two ellipses: one of these is the ellipse through <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>′</mi><mo>,</mo><mi>U</mi><mo>,</mo><mi>P</mi></mrow><annotation encoding="application/x-tex">P&#39;, U, P</annotation></semantics></math> with eccentricity <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>4</mn></msub><annotation encoding="application/x-tex">x_4</annotation></semantics></math> and the other is the ellipse through <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>′</mi><mo>,</mo><mi>L</mi><mo>,</mo><mi>P</mi></mrow><annotation encoding="application/x-tex">P&#39;, L, P</annotation></semantics></math> with eccentricity <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>5</mn></msub><annotation encoding="application/x-tex">x_5</annotation></semantics></math>.</p>
+<p>The next parameter, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>6</mn></msub><annotation encoding="application/x-tex">x_6</annotation></semantics></math>, is the simplest: it gives the length of a vertical line segment through <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>O</mi><annotation encoding="application/x-tex">O</annotation></semantics></math> that is the nose.</p>
+<p>The next three parameters determine the mouth, which is situated using the following geometry:</p>
+<p><img src="/static/img/mouth.png" alt="mouth"></p>
+<p>So <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>7</mn></msub><annotation encoding="application/x-tex">x_7</annotation></semantics></math> is the vertical offset of the center of the mouth. The mouth itself is an arc centered at <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math> with curvature <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>8</mn></msub><annotation encoding="application/x-tex">x_8</annotation></semantics></math>, with a length of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>9</mn></msub><annotation encoding="application/x-tex">x_9</annotation></semantics></math> radians of the full circle.</p>
+<p>Then next six parameters control the eyes. Again, the geometry:</p>
+<p><img src="/static/img/eyes.png" alt="eyes"></p>
+<p>The vertical offset of the eyes is $x_{10}, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>11</mn></msub><annotation encoding="application/x-tex">x_{11}</annotation></semantics></math> is the distance between them, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>15</mn></msub><annotation encoding="application/x-tex">x_{15}</annotation></semantics></math> is the horizontal offset of the pupils. The picture above shows one eye and one pupil, but everything is reflected about the vertical to be symmetric.</p>
+<p>The eyes themselves are ellipses centered at <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>E</mi><annotation encoding="application/x-tex">E</annotation></semantics></math> (and its reflection across the vertical) that have eccentricity <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>13</mn></msub><annotation encoding="application/x-tex">x_{13}</annotation></semantics></math> and are slanted at an angle of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>12</mn></msub><annotation encoding="application/x-tex">x_{12}</annotation></semantics></math> to the horizontal. The parameter <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>14</mn></msub><annotation encoding="application/x-tex">x_{14}</annotation></semantics></math> is cryptically described by Chernoff as “size of eyes.” There’s no standard way to measure the size of an ellipse in one parameter, so I assume this is something like the sum of the lengths of the major and minor axes.</p>
+<p>The final three parameters deal with the eyebrows. The geometry:</p>
+<p><img src="/static/img/eyebrow.png" alt="eyebrows"></p>
+<p>The vertical offset of the eyebrows is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>16</mn></msub><annotation encoding="application/x-tex">x_{16}</annotation></semantics></math>. Their length is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>18</mn></msub><annotation encoding="application/x-tex">x_{18}</annotation></semantics></math>, and they are rotated at an angle of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>17</mn></msub><annotation encoding="application/x-tex">x_{17}</annotation></semantics></math>.</p>
+<p>Finally, the faces are scaled to have a consistent width and height.</p>
+<h2 id="interpretation">2. Interpretation</h2>
+<p>Now that we know just how every numerical feature translates to a facial feature, we can interpret the faces. The most natural way to do this is consider the effect of large or small values of each feature, which is done for large values in the table below.</p>
+<table class="aligncenter">
+<tr>
+<th style="text-align:left">
+Feature
+</th>
+<th style="text-align:left">
+Effect of large value
+</th>
+</tr>
+<tr>
+<td style="text-align:left">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>1</mn></msub><annotation encoding="application/x-tex">x_1</annotation></semantics></math>
+</td>
+<td style="text-align:left">
+Face with further corner
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>2</mn></msub><annotation encoding="application/x-tex">x_2</annotation></semantics></math>
+</td>
+<td style="text-align:left">
+Face with corners at larger angle
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>3</mn></msub><annotation encoding="application/x-tex">x_3</annotation></semantics></math>
+</td>
+<td style="text-align:left">
+Longer face
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>4</mn></msub><annotation encoding="application/x-tex">x_4</annotation></semantics></math>
+</td>
+<td style="text-align:left">
+More pointed chin
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>5</mn></msub><annotation encoding="application/x-tex">x_5</annotation></semantics></math>
+</td>
+<td style="text-align:left">
+Broader forehead
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>6</mn></msub><annotation encoding="application/x-tex">x_6</annotation></semantics></math>
+</td>
+<td style="text-align:left">
+Longer nose
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>7</mn></msub><annotation encoding="application/x-tex">x_7</annotation></semantics></math>
+</td>
+<td style="text-align:left">
+Lower mouth
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>8</mn></msub><annotation encoding="application/x-tex">x_8</annotation></semantics></math>
+</td>
+<td style="text-align:left">
+Flatter smile
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>9</mn></msub><annotation encoding="application/x-tex">x_9</annotation></semantics></math>
+</td>
+<td style="text-align:left">
+Wider smile
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>10</mn></msub><annotation encoding="application/x-tex">x_{10}</annotation></semantics></math>
+</td>
+<td style="text-align:left">
+Higher eyes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>11</mn></msub><annotation encoding="application/x-tex">x_{11}</annotation></semantics></math>
+</td>
+<td style="text-align:left">
+Further separated eyes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>12</mn></msub><annotation encoding="application/x-tex">x_{12}</annotation></semantics></math>
+</td>
+<td style="text-align:left">
+More slanted eyes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>13</mn></msub><annotation encoding="application/x-tex">x_{13}</annotation></semantics></math>
+</td>
+<td style="text-align:left">
+Narrower eyes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>14</mn></msub><annotation encoding="application/x-tex">x_{14}</annotation></semantics></math>
+</td>
+<td style="text-align:left">
+Larger eyes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>15</mn></msub><annotation encoding="application/x-tex">x_{15}</annotation></semantics></math>
+</td>
+<td style="text-align:left">
+Further separated pupils
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>16</mn></msub><annotation encoding="application/x-tex">x_{16}</annotation></semantics></math>
+</td>
+<td style="text-align:left">
+Higher eyebrows
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>17</mn></msub><annotation encoding="application/x-tex">x_{17}</annotation></semantics></math>
+</td>
+<td style="text-align:left">
+More slanted eyebrows
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>18</mn></msub><annotation encoding="application/x-tex">x_{18}</annotation></semantics></math>
+</td>
+<td style="text-align:left">
+Longer eyebrows
+</td>
+</tr>
+</table>
+<p>The same table for small values could be made by taking the opposite of each row.</p>
+<h2 id="an-example">3. An Example</h2>
+<p>To see our interpretation in practice, we look at the sample faces given by Wikipedia, reproduced below.</p>
+<p><img src="/static/img/judges.png" alt="judges"></p>
+<p>The 18 features<span><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"/><span class="sidenote">Some features are duplicated to reach the required 18<br />
+<br />
+</span></span> used are available in R, and we can plug them into the table above to obtain an interpretive guide:</p>
+<table class="aligncenter">
+<tr>
+<th style="text-align:left">
+Feature
+</th>
+<th style="text-align:left">
+Effect of large value
+</th>
+</tr>
+<tr>
+<td style="text-align:left">
+Judicial integrity
+</td>
+<td style="text-align:left">
+Face with further corner
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Demeanor
+</td>
+<td style="text-align:left">
+Face with corners at larger angle
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Diligence
+</td>
+<td style="text-align:left">
+Longer face
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Case flow managing
+</td>
+<td style="text-align:left">
+More pointed chin
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Prompt decisions
+</td>
+<td style="text-align:left">
+Broader forehead
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Preparation for trial
+</td>
+<td style="text-align:left">
+Longer nose
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Familiarity with law
+</td>
+<td style="text-align:left">
+Lower mouth
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Sound oral rulings
+</td>
+<td style="text-align:left">
+Flatter smile
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Sound written rulings
+</td>
+<td style="text-align:left">
+Wider smile
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Physical ability
+</td>
+<td style="text-align:left">
+Higher eyes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Judicial integrity
+</td>
+<td style="text-align:left">
+Further separated eyes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Demeanor
+</td>
+<td style="text-align:left">
+More slanted eyes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Diligence
+</td>
+<td style="text-align:left">
+Narrower eyes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Case flow managing
+</td>
+<td style="text-align:left">
+Larger eyes
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Prompt decisions
+</td>
+<td style="text-align:left">
+Further separated pupils
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Preparation for trial
+</td>
+<td style="text-align:left">
+Higher eyebrows
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Familiarity with law
+</td>
+<td style="text-align:left">
+More slanted eyebrows
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Sound oral rulings
+</td>
+<td style="text-align:left">
+Longer eyebrows
+</td>
+</tr>
+</table>
+<p>(A similar table is available in the Wikipedia page for the image, but I tried to phrase things more in terms of how we talk about faces.) Based on this and the previous table, we can do several useful things. One is to quickly pick out extremes - for example, Judge Cohen’s circular eyes give away his lack of diligence. Judge Bracken is not too diligent either, but at least he is better at case flow managing, as reflected in his larger eyes. Another is to get a feel for the general distribution of a trait. Nearly all of the judges are completely flat-mouthed, telling us that the soundness of their oral rulings is fairly uniform.</p>
+<p>One counterintuitive thing about this method is that the ordering of the variables is important. Arranging features so that those measuring similar things are affecting the same portions of the face can allow for higher level interpretations (e.g. happy judges give better rulings), while separating them removes this structure. But the idea at least, of using our sensitivity to facial features to help understand data, is a cute one.</p>
+</body>
+</html>
+
+  
+  </article>
+
+  </div>
+  <div class="thefooter">
+    <p>Made with Athena
+    <br><br>Copyright, <i>2016</i></p>
+  </div> <!-- footer end -->
+</body>
+</html>
