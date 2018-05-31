@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Against Intro Stat Classes &mdash; Patterns of Ideas</title>
+  <link rel="stylesheet" type="text/css" href="/static/tufte.css">
+  <link rel="stylesheet" type="text/css" href="/static/latex.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/pygments.min.css">
+  <script type="text/javascript" src="/static/enquire.min.js"></script>
+  <script type="text/javascript" src="/static/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="/static/resources.min.js"></script>
+  <script type="text/javascript" src="/static/LaTeXMathML.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='shortcut icon' href="/static/favicon.ico" type='image/x-icon'/>
+  <style type="text/css">
+   img { mix-blend-mode: multiply; }
+  </style>
+  <meta property="og:author" content="Samir Khan" />
+  <meta property="og:title" content="Against Intro Stat Classes" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="Criticisms of the standard introductory statistics curriculum." />
+  <meta property="og:url" content="/posts/introstat/" />
+  <meta property="og:image" content="/static/img/athena.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Against Intro Stat Classes" />
+  <meta name="twitter:description" content="Criticisms of the standard introductory statistics curriculum." />
+  <meta name="twitter:url" content="/posts/introstat/" />
+  <meta name="twitter:image" content="/static/img/athena.png" />
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+<body>
+  <div class="thearticle">
+
+  <article>
+  
+    <h1>Against Intro Stat Classes</h1>
+    <p id="blog-p"><span id="blogdesc" class="marginnote">
+    A personal blog by Samir Khan<br><br>
+    <a href="/">home</a> ·
+    
+      <a href="/about/">
+        about</a>
+    </span></p>
+
+    <subtitle class="sub-date">May 31, 2018 · <span style="font-size: 1.6rem;"><a style="border-bottom-width: 0px !important;" href="/posts/introstat/">&infin;</a></span></subtitle>
+
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<p>Have you ever taken a garden variety introductory statistics course? It goes something like this:</p>
+<ul>
+<li>Plotting data in various ways, describing it with various numbers</li>
+<li>Some basic probability, a look at the geometric, binomial, and normal distributions</li>
+<li>Sampling distributions, the central limit theorem</li>
+<li>A couple of standard tests for significance and confidence intervals</li>
+</ul>
+<p>I have some technical issue with this syllabus. Parameter estimation is worth at least a mention and so are Bayesian methods. Regression is worth a mention, and it does sometimes gets that, although often without appropriate disclaimers. But when a friend of mine took UChicago’s version of this class, I became aware of a much larger non-technical issue: this class is kind of useless.</p>
+<p>More specifically: calculating means and medians are not things you need a class to teach you how to do.<span><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"/><span class="sidenote">Actually, the fact that the median is robust to outliers while the mean is not is one of the most concretely useful things you can get out of such a class, but surely that one nugget is not worth the whole semester-long affair<br />
+<br />
+</span></span> The geometric, binomial, and normal distributions are worth knowing about, but doing computations with them is not a life skill. Hypothesis tests are useful mainly if you want to go into the natural or social sciences, but even there, <a href="http://datacolada.org/">p-values aren’t</a> <a href="https://www.ascb.org/ascb-post/what-is-significant-reevaluating-the-p-value/">what they</a> <a href="https://www.nature.com/news/statisticians-issue-warning-over-misuse-of-p-values-1.19503">used to be</a>. Most of these topics justify their place in the course by virtue of being classical, and they certainly are, but I don’t think you can stand by them as things that are really practical. Unsurprisingly, students taking these classes have no trouble figuring this out. My friend repeatedly asked me questions of the flavors “do people actually use this” and “what does this have to do with the work you do.” Except for a few vague attempts at tracing the line from those topics to more modern areas (e.g. thinking about p-values gets us thinking about multiple testing problems), I came up empty-handed every time.</p>
+<p>There’s a strong and accurate counter-argument to be made here that the things worth learning are not exclusively the useful ones, and that classical material is good to know if only because everyone else does. The problem with this counter-argument though, is that an introductory statistics course is fundamentally different from an introductory course for a major or a specialized elective. It is a course that class almost explicitly bills itself as being useful, and so it could afford to live up to that promise.</p>
+<p>What does the fulfillment of that promise actually look like? This is a hard question to which I don’t have an answer. Part of the difficulty question comes from the fact that different things are useful to different people. Biologists need to know about hypothesis testing. Social scientists need to know about confounding variables. Physicists need to know how to handle uncertainty in measurements. You can’t give all of them each of these things in one fell swoop without the others crying out that their time is being wasted.</p>
+<p>This begs the question though, of how that introductory statistics class lures in people from so many different walks of life in the first place. Clearly they all wanted something from it, and somehow I doubt that something was the specific set of technical tools used in their field. More likely than not, that something is the sex appeal of “big data/predictive analytics/machine learning” luring them in.</p>
+<p>So why not give it to them? Or at least, give them the closest thing there is. The statistics/machine learning distinction is fine and debated to death, but the introductory statistics/machine learning distinction seems pretty clear to me. Everything in the coarse outline I started with is about understanding data or making statements about it. None of it is about making predictions from data, the closest thing machine learning has to unifying principle, and often the exact thing that people find useful.</p>
+<p>This is the point in this essay where I should offer a coarse outline of the course I’m imagining, but I feel dramatically under-qualified to that, so I’m just going to punt and say that <a href="http://ttic.uchicago.edu/~suriya/website-intromlss2018/index.html">this course</a> seems like a great selection of topics. It’s probably a little heavy on deep learning for what I’m imagining, but it definitely has the right thrust.</p>
+<p>The statistician John Tukey famously quipped that “The best thing about being a statistician is that you get to play in everyone else’s backyard.” The accuracy of this comment is proof alone that statistics can be useful to everyone. A lot of people end up with piles of data, and wonder what to do with them. The answer to that question isn’t an introductory statistics course, but I think it can and should be.</p>
+</body>
+</html>
+
+  
+  </article>
+
+  </div>
+  <div class="thefooter">
+    <p>Made with Athena
+    <br><br>Copyright, <i>2016</i></p>
+  </div> <!-- footer end -->
+</body>
+</html>
