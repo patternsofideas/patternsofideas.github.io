@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Keyboard Phonetics &mdash; Patterns of Ideas</title>
+  <link rel="stylesheet" type="text/css" href="/static/tufte.css">
+  <link rel="stylesheet" type="text/css" href="/static/latex.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/pygments.min.css">
+  <script type="text/javascript" src="/static/enquire.min.js"></script>
+  <script type="text/javascript" src="/static/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="/static/resources.min.js"></script>
+  <script type="text/javascript" src="/static/LaTeXMathML.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='shortcut icon' href="/static/favicon.ico" type='image/x-icon'/>
+  <style type="text/css">
+   img { mix-blend-mode: multiply; }
+  </style>
+  <meta property="og:author" content="Samir Khan" />
+  <meta property="og:title" content="Keyboard Phonetics" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="Some exploration of the relationship between positions of letters on a keyboard and their phonetic properties." />
+  <meta property="og:url" content="/posts/qwerty/" />
+  <meta property="og:image" content="/static/img/athena.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Keyboard Phonetics" />
+  <meta name="twitter:description" content="Some exploration of the relationship between positions of letters on a keyboard and their phonetic properties." />
+  <meta name="twitter:url" content="/posts/qwerty/" />
+  <meta name="twitter:image" content="/static/img/athena.png" />
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+<body>
+  <div class="thearticle">
+
+  <article>
+  
+    <h1>Keyboard Phonetics</h1>
+    <p id="blog-p"><span id="blogdesc" class="marginnote">
+    A personal blog by Samir Khan<br><br>
+    <a href="/">home</a> ·
+    
+      <a href="/about/">
+        about</a>
+    </span></p>
+
+    <subtitle class="sub-date">July 19, 2018 · <span style="font-size: 1.6rem;"><a style="border-bottom-width: 0px !important;" href="/posts/qwerty/">&infin;</a></span></subtitle>
+
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<p>I was staring at my keyboard a few days ago, and I noticed the facts that (i) the F and V keys are right next to each other (ii) F and V are both the same kind of sound, specifically a <a href="https://www.wikiwand.com/en/Fricative_consonant">fricative</a>. I then noticed a few more: the <a href="https://www.wikiwand.com/en/Stop_consonant">stops</a> T and D are also nearly adjacent, as are the <a href="https://www.wikiwand.com/en/Nasal_consonant">nasals</a> M and N. This post is an attempt to figure out whether or not all this is a coincidence.</p>
+<p>Here is an argument for why it is not a coincidence. To the best of my understanding, the QWERTY keyboard tries to keep pairs of letters that frequently appear together in text apart in the keyboard. Conversely, it must keep letters that rarely occur together in text close in the keyboard. Since you would rarely have the same sound appear twice in a row in any word, letters that make similar sounds should be pushed together.</p>
+<p>Here is an argument for why the previous argument is wrong. Letters do not map neatly onto sounds, especially not in English: one letter can make many different sounds, and one sound can come from many different letters. This makes the line from certain sounds not appearing together in spoken words, to certain letters not appearing together in the spellings of those words, to those letters appearing close together on the keyboard tenuous at best and non-existent at worse.</p>
+<p>I’m personally pretty convinced by both of these arguments, so I tried to do something more conclusive. Specifically, I first enlisted a friend of mine who studies linguistics to group the English letters phonetically based on the sounds they typically make.<span><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"/><span class="sidenote">Note that some letters, like C, appear in multiple groups<br />
+<br />
+</span></span> The groups she gave me were:</p>
+<ul>
+<li>Stops: Q, T, P, D, G, K, B, C</li>
+<li>Semivowels: W, Y, J</li>
+<li>Vowels: A, E, I, O, U</li>
+<li>Liquids: R, L</li>
+<li>Nasals: M, N</li>
+<li>Fricatives: F, H, S, Z, X, C, V</li>
+</ul>
+<p>We can measure how well a keyboard layout keeps each of these groups together by taking the average of the pairwise distances on the keyboard between all the letters in a group. For our purposes, the distance between two keys on the keyboard is just the horizontal distance plus the vertical distance, treating the keys as a grid. So for example, the distance between Q and Z is 2, while the distance between T and J is 3.</p>
+<p>Then, we can see if the QWERTY keyboard does an unusually good or bad job keeping these groups together by randomly generating an ensemble of alternative keyboards, computing the average group distance for each of those, and seeing how they compare to QWERTY. Doing this with 100,000 random keyboards gives the following picture<span><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"/><span class="sidenote">The different bin numbers are because some of the groups, like nasals, can only have integer values<br />
+<br />
+</span></span>:</p>
+<p><img src="/static/img/qwerty/phonetic_distances.png" alt="Phonetic distances" style="width: 1000px;"/></p>
+<p>The histogram for each group is the histogram of average group distance across all keyboards in the ensemble. The red line marks the average group distance for the QWERTY keyboard. Based on this, we see that the QWERTY keyboard keeps nasals and fricatives unusually close together, but nothing else. The nasals can be explained by the fact that they are adjacent on QWERTY, and this is as close as it is possible to get. The fricatives are harder to explain. One guess is that the fricatives are the sounds which most uniquely map to letters, and are also least likely to appear together in a word, so they are the most pushed together. But this isn’t something that I would have guessed before seeing this, and I’d be interested in hearing other explanations.</p>
+<p>One other cute thing you can do is find keyboards that do an especially good job keeping phonetic groups together, like this one:</p>
+<p><img src="/static/img/qwerty/best.png" alt="Phonetic distances" style="width: 1000px;"/></p>
+<p>Or ones that do an especially bad job, like this one:</p>
+<p><img src="/static/img/qwerty/worst.png" alt="Phonetic distances" style="width: 1000px;"/></p>
+<p>I’d be really curious to remap my keys according to these, and see if they make any noticeable difference.</p>
+</body>
+</html>
+
+  
+  </article>
+
+  </div>
+  <div class="thefooter">
+    <p>Made with Athena
+    <br><br>Copyright, <i>2016</i></p>
+  </div> <!-- footer end -->
+</body>
+</html>
