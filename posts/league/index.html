@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8"/>
+  <title>LL Defense: A Cautionary Tale of Classification &mdash; Patterns of Ideas</title>
+  <link rel="stylesheet" type="text/css" href="/static/tufte.css">
+  <link rel="stylesheet" type="text/css" href="/static/latex.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/pygments.min.css">
+  <script type="text/javascript" src="/static/enquire.min.js"></script>
+  <script type="text/javascript" src="/static/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="/static/resources.min.js"></script>
+  <script type="text/javascript" src="/static/LaTeXMathML.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='shortcut icon' href="/static/favicon.ico" type='image/x-icon'/>
+  <style type="text/css">
+   img { mix-blend-mode: multiply; }
+  </style>
+  <meta property="og:author" content="Samir Khan" />
+  <meta property="og:title" content="LL Defense: A Cautionary Tale of Classification" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="An attempt to improve performance at an online trivia contest by thinking of it as a classification problem" />
+  <meta property="og:url" content="/posts/league/" />
+  <meta property="og:image" content="/static/img/athena.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="LL Defense: A Cautionary Tale of Classification" />
+  <meta name="twitter:description" content="An attempt to improve performance at an online trivia contest by thinking of it as a classification problem" />
+  <meta name="twitter:url" content="/posts/league/" />
+  <meta name="twitter:image" content="/static/img/athena.png" />
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+<body>
+  <div class="thearticle">
+
+  <article>
+  
+    <h1>LL Defense: A Cautionary Tale of Classification</h1>
+    <p id="blog-p"><span id="blogdesc" class="marginnote">
+    A personal blog by Samir Khan<br><br>
+    <a href="/">home</a> ·
+    
+      <a href="/about/">
+        about</a>
+    </span></p>
+
+    <subtitle class="sub-date">August 31, 2018 · <span style="font-size: 1.6rem;"><a style="border-bottom-width: 0px !important;" href="/posts/league/">&infin;</a></span></subtitle>
+
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<blockquote>
+<p>“You mustn’t pay too much attention to [predictions]. The [outcome] is immutable, and the [predictions] are often only an expression of despair over it.” <br> – Franz Kafka</p>
+</blockquote>
+<p>In June, a friend of mine introduced me to <a href="https://www.nytimes.com/2018/01/11/magazine/letter-of-recommendation-learned-league.html">Learned</a> <a href="https://www.washingtonpost.com/lifestyle/style/the-coolest-weirdest-internet-community-youll-never-be-able-to-join/2014/08/20/3c3f565e-26eb-11e4-958c-268a320a60ce_story.html?utm_term=.7f93f61def4a">League</a>. The basic format is that you play a series of one-on-one trivia matches against a pool of opponents over the course of a season. At the end of the season, players are ranked, and moved to harder or easier pools for doing exceptionally well or poorly. Each individual match consists of six questions, which you have to try to answer correctly. But, crucially, the winner of a match is not the person who answers more questions correctly - it is the person who scores more points. The points are not pre-ordained; they are assigned by your opponent.</p>
+<p><span class="marginnote"><img src="/static/img/ll/hist.png" alt="Question history" style="width: 500px;"/></span></p>
+<p>The point values for the six questions have to be assigned from the set <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">{</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>3</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">\{0, 1, 1, 2, 2, 3\}</annotation></semantics></math>. If I think my opponent is very likely to get a question right, I would assign it 0 points. Conversely, a question I think my opponent is unlikely to get right would be assigned 3 points. This defensive assignment turns out to be quite important, almost as important as answering questions correctly. If you and your opponent answer the same number of questions correctly, which is not that unusual, the winner is determined by defense. If you and your opponent are within one question of each other, defense can still make a tie of a loss, or a win of a tie. This post outlines my attempts to improve my defense through algorithmic means, the code for which is available <a href="https://github.com/skhan1998/learned-league">here</a>.</p>
+<h3 id="not-your-textbooks-classification-task">1. Not Your Textbook’s Classification Task</h3>
+<p>How can I tell whether or not my opponent will get a question right? One way is to judge how difficult each question is, and go by that. The drawbacks of this are that it may be hard to judge difficulty for questions you know nothing about (e.g. I have no way to tell if a sports question is easy or hard for someone who follows sports) and that even if you can judge, your opponent’s knowledge base might be different from yours. Luckily, the website shows you your opponents past accuracy broken down by category (for an example, see mine in the margin), and you can use this to inform things a bit.</p>
+<p>Actually, you have access to a good bit more information than this: you can, if you want to, see all the questions your opponent has answered in the past, and whether or not they answered them correctly. This means, for example, that if your opponent has a history of answering of questions about islands correctly, you can discover as much and defend yourself accordingly. The drawback of this approach is that players can have extensive question histories that are inconvenient to trawl through, and it can also be hard to identify which questions are relevant to the current ones.</p>
+<p>Enter machine learning. Predicting whether or not a new question will be answered correctly given a set of past questions is a textbook classification problem. So all you need to do is scrape the data you need, train the classifier, and watch your rankings climb.</p>
+<p>Except not really. Complications:</p>
+<ol style="list-style-type: decimal">
+<li>You have to train a new classifier for each opponent, and you only get as many training samples as they have question history. For opponents who have played only a single season, this is as few as 450, which might be enough to separate the classes, except</li>
+<li>Most of my opponents are about as good as I am, which is to say not every good. This makes the classes in the training data highly imbalanced - maybe as few as 45 of those 450 questions have been answered correctly. And even those might not be great samples, because</li>
+<li>The corpus of questions is full of oddball words that appear in only one question. Some of these are foreign words, others are just highly specific, but either way, a given question may be useless for informing decisions about any others.</li>
+</ol>
+<p>These complications are hardly insurmountable though, so I gave it a shot.</p>
+<h3 id="into-the-random-forest">2. Into the (Random) Forest</h3>
+<p>Random forests seemed like a good choice for this problem, since unlike regularized logistic regression, there are no finnicky parameters that need tuning for every new opponent. A suitably large number of forests should be able to both make good predictions on opponents with lots of history and avoid over-fitting on opponents with little history. I did the scraping with BeautifulSoup, represented questions using a publicly available sentence embedding library, and got a little script working. A sample output looked like this:</p>
+<p><img src="/static/img/ll/rf_output.png" alt="Sample output" style="width: 500;"/></p>
+<p>For the next few days, I used these outputs to inform my defensive choices. It was a very confusing time in my life - every morning I would compare the previous day’s predictions with what my opponent had actually gotten carefully, and then undertake a Kafkaesque struggle to figure out whether the predictions were actually meaningful. There were days when I was completely convinced I had an edge and days where I was completely convinced I had a list of six random numbers.</p>
+<p>The sklearn random forest function has some great introspection tools though, and I was able to use these to get a feel for what was going on with the predictions. I looked at the questions that most commonly co-occurred with the new questions in terminal nodes of the forest. To my disappointment, they were complete garbage for players with small question histories. For nearly every question, the following question was found to be extremely influential:</p>
+<blockquote>
+<p>Prompted by the 1902 armed intervention of British and German forces in Venezuela to settle debt claims, an amendment to the Monroe Doctrine was issued stating that only the United States may act as an international police power in the western hemisphere. This supplement is commonly known by what name after the man who issued it in 1904?</p>
+</blockquote>
+<p>Why? Because it contains lots of country names, so any question asking about a “British painter” or “U.S. state” would register as similar to it. For a question about spheres, a question about pastry puffs was deemed highly relevant, because the sentence embeddings had identified puffs as spherical objects. Trying more examples gave ever more weird connections, false alarms, and general failures to separate the chaff from the wheat. There were some cases where questions were correctly flagged as informative, especially in players with extensive histories, but for players with limited history, the predictions were based on a functionally random sample of past questions.</p>
+<h3 id="the-case-for-transparency">3. The Case for Transparency</h3>
+<p>Unfortunately, the problems described above could not be overcome by a different classifier, since they are more a product of the problem structure and choice of embedding. They exist because, in some cases, there really are no questions in the history similar enough to the current one to give meaningful information, and in other cases there are questions that appear similar to the current one, but are different in subtle and algorithmically imperceptible ways that make them useless. Any classification algorithm tries to find relevant questions whether or not they exist, and when they don’t, it turns up nonsense. So really, the best you can do is make it clear what information went into the predictions, and then place stock in the predictions based on judgement of that information. Once you start thinking in this direction though, the prediction algorithm starts to seem redundant: if you’re going to look at the questions anyway, why are you relying on an algorithm to make a judgement from them?</p>
+<p>To balance my judgement with an algorithm, I settled on the following workflow. I scrape my opponent’s history, and compute both sentence embeddings and tf-idf embeddings. Then, I use both of these to find nearest neighbors for the current questions. I format and output these to a PDF, and as a sort of half-hearted prediction, note the proportion that were answered correctly. One way to think about this is that there’s still a (nearest-neighbor) classifier in the picture, and it’s still spitting out predictions, but those predictions have been relegated to the edge of the frame, leaving the focus on the training data that informed them. Here’s a sample output for a player with sparse history:</p>
+<p><img src="/static/img/ll/sparse_hist.png" alt="Sample output" style="width: 500;"/></p>
+<p>And another sample output on the same question for a player with dense history:</p>
+<p><img src="/static/img/ll/dense_hist.png" alt="Sample output" style="width: 500;"/></p>
+<p>The point is that you can see there is little useful history in the former and plenty in the latter; in both cases, you can see whatever useful history there is.</p>
+<p>I’m always wary of extracting excessively broad lessons from single instances, but this whole project gave me the strong sense of being taught a lesson. Why was I so eager to have list of probabilities? Why did I expect that I could make those probabilities be consistently meaningful? I was aware of all the issues I listed above, and I still thought that the right mix of modeling and magic would give me the answers I wanted. Before I poked around and saw how meaningless the numbers really were, it never even occurred to me that it might be worth contextualizing them. Wary though I am, I think the lesson is that forcing models to offer some kind of epistemic status on their predictions can make those predictions far more useful and far less misleading.</p>
+</body>
+</html>
+
+  
+  </article>
+
+  </div>
+  <div class="thefooter">
+    <p>Made with Athena
+    <br><br>Copyright, <i>2016</i></p>
+  </div> <!-- footer end -->
+</body>
+</html>
