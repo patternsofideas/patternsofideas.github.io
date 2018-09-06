@@ -66,7 +66,7 @@
 <p>Except not really. Complications:</p>
 <ol style="list-style-type: decimal">
 <li>You have to train a new classifier for each opponent, and you only get as many training samples as they have question history. For opponents who have played only a single season, this is as few as 450, which might be enough to separate the classes, except</li>
-<li>Most of my opponents are about as good as I am, which is to say not every good. This makes the classes in the training data highly imbalanced - maybe as few as 45 of those 450 questions have been answered correctly. And even those might not be great samples, because</li>
+<li>Most of my opponents are about as good as I am, which is to say not very good. This makes the classes in the training data highly imbalanced - maybe as few as 45 of those 450 questions have been answered correctly. And even those might not be great samples, because</li>
 <li>The corpus of questions is full of oddball words that appear in only one question. Some of these are foreign words, others are just highly specific, but either way, a given question may be useless for informing decisions about any others.</li>
 </ol>
 <p>These complications are hardly insurmountable though, so I gave it a shot.</p>

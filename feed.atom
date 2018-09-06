@@ -1445,7 +1445,7 @@ Note that I’m omitting “Jai ___” and “Gaelic” for variety’s sake. As
 &lt;p&gt;Except not really. Complications:&lt;/p&gt;
 &lt;ol style=&quot;list-style-type: decimal&quot;&gt;
 &lt;li&gt;You have to train a new classifier for each opponent, and you only get as many training samples as they have question history. For opponents who have played only a single season, this is as few as 450, which might be enough to separate the classes, except&lt;/li&gt;
-&lt;li&gt;Most of my opponents are about as good as I am, which is to say not every good. This makes the classes in the training data highly imbalanced - maybe as few as 45 of those 450 questions have been answered correctly. And even those might not be great samples, because&lt;/li&gt;
+&lt;li&gt;Most of my opponents are about as good as I am, which is to say not very good. This makes the classes in the training data highly imbalanced - maybe as few as 45 of those 450 questions have been answered correctly. And even those might not be great samples, because&lt;/li&gt;
 &lt;li&gt;The corpus of questions is full of oddball words that appear in only one question. Some of these are foreign words, others are just highly specific, but either way, a given question may be useless for informing decisions about any others.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;These complications are hardly insurmountable though, so I gave it a shot.&lt;/p&gt;
