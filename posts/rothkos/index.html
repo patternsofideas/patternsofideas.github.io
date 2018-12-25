@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Random Rothkos &mdash; Patterns of Ideas</title>
+  <link rel="stylesheet" type="text/css" href="/static/tufte.css">
+  <link rel="stylesheet" type="text/css" href="/static/latex.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/pygments.min.css">
+  <script type="text/javascript" src="/static/enquire.min.js"></script>
+  <script type="text/javascript" src="/static/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="/static/resources.min.js"></script>
+  <script type="text/javascript" src="/static/LaTeXMathML.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='shortcut icon' href="/static/favicon.ico" type='image/x-icon'/>
+  <style type="text/css">
+   img { mix-blend-mode: multiply; }
+  </style>
+  <meta property="og:author" content="Samir Khan" />
+  <meta property="og:title" content="Random Rothkos" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="Randomly generating paintings in the style of Mark Rothko" />
+  <meta property="og:url" content="/posts/rothkos/" />
+  <meta property="og:image" content="/static/img/athena.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Random Rothkos" />
+  <meta name="twitter:description" content="Randomly generating paintings in the style of Mark Rothko" />
+  <meta name="twitter:url" content="/posts/rothkos/" />
+  <meta name="twitter:image" content="/static/img/athena.png" />
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+<body>
+  <div class="thearticle">
+
+  <article>
+  
+    <h1>Random Rothkos</h1>
+    <p id="blog-p"><span id="blogdesc" class="marginnote">
+    A personal blog by Samir Khan<br><br>
+    <a href="/">home</a> ·
+    
+      <a href="/about/">
+        about</a>
+    </span></p>
+
+    <subtitle class="sub-date">December 24, 2018 · <span style="font-size: 1.6rem;"><a style="border-bottom-width: 0px !important;" href="/posts/rothkos/">&infin;</a></span></subtitle>
+
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<p>(If you just came here to see some random Rothkos, you can find them <a href="https://drive.google.com/drive/folders/1VGDbQmG6vbQgCYtN6e5rs67O8PzwVDXQ?usp=sharing">here</a>.)</p>
+<p>Now that I’m done applying to grad school, I have tons of time to try new things I’ve always meant to try. A big one of these is generative art, which I’ve been curious about ever since I saw <a href="https://www.tate.org.uk/art/artworks/nake-no-title-p80816">this piece</a>. This curiosity bubbled over when I saw a <a href="http://www.markrothko.org/paintings/">Rothko</a> on a friend’s wall and got into a conversation about the possibility of generating similar paintings with a computer, which I promptly proceeded to try.</p>
+<p>To be clear, I love Rothkos and this is not at all in the spirit of “well I could’ve done that too”. Instead, I’m mostly interested in how accurately something like painting can be modeled by a random process, since assumptions of this kind underlie a lot of applied statistical work. This means the goal here is really to make images that look as much like real Rothko paintings as possible. It’s not enough to make visually interesting images inspired by Rothko’s work (which I think I succeeded at) - I want to make things that really look like they could have been made by Rothko (which, spoiler, I don’t think I succeeded at).</p>
+<p>The general template for the paintings I made was the particular kind of Rothko that has two vertically aligned rectangles of different sizes, filled with two different colors, set against a background of a third color (e.g. <a href="http://www.markrothko.org/dark-over-light-earth/">this one</a> or <a href="http://www.markrothko.org/green-and-tangerine-on-red/">this one</a>). The process I developed is somewhat contrived; in particular, there are a lot of arbitrary constants involved that I chose by trying different values and judging the results with my eye. These are marked throughout by a parenthetical TC, for tuned constant.</p>
+<h3 id="coloring-rectangles">1. Coloring Rectangles</h3>
+<p>The base unit of these paintings is a rectangle filled in with a single color. Formally, filling a rectangle with a color <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math> means assigning an RGB value to each pixel of an image. I do this in two steps: first, I create a base coat that mimics the actual process of painting, and then I smooth the base coat to make the images look more natural. As a running example, we’ll try to fill a rectangle in with this color:</p>
+<p><img src="/static/img/rothko/sample.png" alt="Sample color" style="width: 300px;"/></p>
+<h3 id="the-base-coat">1.1 The Base Coat</h3>
+<p>A base coat is created by a series of brush strokes, where every brush stroke is produced by:</p>
+<ol style="list-style-type: decimal">
+<li>either randomly selecting or pre-specifying a starting pixel for the brush stroke</li>
+<li>adding the pixels above and below the starting pixel to the stroke with probability 0.25 (TC) and the pixels to the left and right with probability 0.75 (TC)</li>
+<li>repeating the previous step 20 (TC) times, each time going through each pixel in the stroke and adding neighbors with the given probabilities</li>
+</ol>
+<p>A single stroke looks like this:</p>
+<p><img src="/static/img/rothko/stroke.png" alt="Brush stroke" style="width: 300px;"/></p>
+<p>Next we have to fill these strokes in with color. The strokes are filled in one pixel at a time, and in one of two ways. If the pixel is unfilled, it is filled in with the color <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi><mo>+</mo><mtext mathvariant="normal">Uni</mtext><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="prefix">[</mo><mn>0</mn><mo>,</mo><mn>0.1</mn><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> (TC) </mtext><mspace width="0.333em"></mspace></mrow><mo stretchy="false" form="postfix">]</mo><mo stretchy="false" form="postfix">)</mo><mo>⋅</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>C</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">C+\text{Uni}([0,0.1\text{ (TC) }])\cdot (1-C),</annotation></semantics></math> which is a random color slightly lighter than <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>. If the pixel is already filled with a color <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>, it is filled in with <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi><mo>+</mo><mtext mathvariant="normal">Uni</mtext><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="prefix">[</mo><mn>0</mn><mo>,</mo><mn>0.1</mn><mo stretchy="false" form="postfix">]</mo><mo stretchy="false" form="postfix">)</mo><mo>⋅</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>D</mi><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> (TC) </mtext><mspace width="0.333em"></mspace></mrow><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">D+\text{Uni}([0,0.1])\cdot(1-D\text{ (TC) }),</annotation></semantics></math> which is a random color slightly lighter than its current color. This is the opposite of how real painting, where overlapping brushstrokes create darker patches, works but the effect is basically the same.</p>
+<p>Filling in our stroke from above with the starting color gives the picture below.</p>
+<p><img src="/static/img/rothko/colored.png" alt="Brush stroke" style="width: 300px;"/></p>
+<p>These strokes are added to the painting in two phases. In the first phase, strokes are added with random starting points until 30% (TC) of the pixels are colored. Then, the second phase begins, in which each stroke is deliberately started at an uncolored pixel to quickly finish filling up the canvas. The final result is our base coat, shown below.</p>
+<p><img src="/static/img/rothko/base.png" alt="Base coat" style="width: 300px;"/></p>
+<p>The lighter patches you see are the result of strokes overlapping - the pixels in the overlap are lightened twice and stand out from others.</p>
+<h3 id="smoothing">1.2 Smoothing</h3>
+<p>To make the base coat more natural and less pixellated, we smooth it. This smoothing involves minimizing a measure of how unsmooth a painting is, which we call the energy of the painting. This energy is the average over all pixels of the sum of the differences between a pixel’s RGB values and it’s neighbor’s RGB values. We have to choose how we define neighbors, and so this energy is indexed by a level <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ℓ</mi><annotation encoding="application/x-tex">\ell</annotation></semantics></math> - the energy at level <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ℓ</mi><annotation encoding="application/x-tex">\ell</annotation></semantics></math> takes into account differences between pixels that are up to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ℓ</mi><annotation encoding="application/x-tex">\ell</annotation></semantics></math> units apart in the image.</p>
+<p>The energy is minimized by looping over all pixels, and for a pixel with color <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>, proposing a new color <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi><mo>+</mo><mtext mathvariant="normal">Unif</mtext><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="prefix">[</mo><mo>−</mo><mn>0.2</mn><mo>,</mo><mn>0.2</mn><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> (TC) </mtext><mspace width="0.333em"></mspace></mrow><mo stretchy="false" form="postfix">]</mo><mo stretchy="false" form="postfix">)</mo><mo>⋅</mo><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>D</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">D+\text{Unif}([-0.2,0.2\text{ (TC) }])\cdot (1-D),</annotation></semantics></math> which is slightly darker or lighter than the color <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math>. If giving the pixel this new color lowers the energy of the painting, we make the change; if it does not, we leave the pixel alone.</p>
+<p>After experimentation, I settled on doing two (TC) rounds of this smoothing with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℓ</mi><mo>=</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">\ell=5</annotation></semantics></math> (TC) (this smooths out large scale features) and ten (TC) rounds of this smoothing with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℓ</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\ell=2</annotation></semantics></math> (TC) (this fixes pixels that stand out too much from their immediate neighbors) to the base coats. Applying this to the base coat shown above gives this:</p>
+<p><img src="/static/img/rothko/final.png" alt="Smoothed" style="width: 300px;"/></p>
+<h3 id="choosing-a-structure">2. Choosing a Structure</h3>
+<p>To actually make a Rothko out of our colored rectangles, we need to combine them in some suitable way. I specifically start with three 150 pixel by 100 pixel rectangles e.g.</p>
+<table>
+<tr>
+<td>
+<img src="/static/img/rothko/p1.png" alt="painting1" style="width: 200px;"/>
+</td>
+<td>
+<img src="/static/img/rothko/p2.png" alt="painting2" style="width: 200px;"/>
+</td>
+<td>
+<img src="/static/img/rothko/p3.png" alt="painting3" style="width: 200px;"/>
+</td>
+</table>
+<p>(These colors, like every color in this process, are chosen randomly.)</p>
+<p>The first of these will become the background color and the other two will become the colored patches. The colored patches always begin 15 (TC) pixels from the left and end 15 (TC) pixels from the right. Their vertical positions are determined by choosing 4 random integers uniformly from the intervals <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>15</mn><mo>,</mo><mn>30</mn><mo stretchy="false" form="postfix">)</mo><mo>,</mo><mo stretchy="false" form="prefix">(</mo><mn>50</mn><mo>,</mo><mn>70</mn><mo stretchy="false" form="postfix">)</mo><mo>,</mo><mo stretchy="false" form="prefix">(</mo><mn>80</mn><mo>,</mo><mn>100</mn><mo stretchy="false" form="postfix">)</mo><mo>,</mo><mo stretchy="false" form="prefix">(</mo><mn>120</mn><mo>,</mo><mn>135</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(15,30), (50,70), (80,100), (120,135)</annotation></semantics></math> (all TC). These four integers are, in order, the start of the top patch, the end of the top patch, the start of the bottom patch, and the end of the bottom patch.</p>
+<p>Once these integers have been chosen, we can construct a full image by drawing each pixel from the appropriate colored rectangles, the result of which is shown below.</p>
+<p><img src="/static/img/rothko/draft.png" alt="Full painting" style="width: 300px;"/></p>
+<p>These boundaries look very unnatural though, and so I decided to smooth them out a bit.</p>
+<h3 id="smoothing-edges">3. Smoothing Edges</h3>
+<p>The edges are smoothed using the exact same approach as the base coats. Doing this directly to the image above doesn’t work though, since there aren’t enough cells of different colors adjacent to each other to make a big difference. Instead, I introduced small perturbations to the edges using variants of the brushstrokes described before (except with different probabilities of advancing in each direction):</p>
+<p><img src="/static/img/rothko/rough.png" alt="Full painting" style="width: 300px;"/></p>
+<p>Finally, doing twenty (TC) rounds of smoothing<span><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"/><span class="sidenote">Actually the full story is slightly more complicated: here, I separately smooth the R, G, and B values and propose changes to each by adding <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">Unif</mtext><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="prefix">[</mo><mn>0</mn><mo>,</mo><mn>0.1</mn><mo stretchy="false" form="postfix">]</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\text{Unif}([0,0.1])</annotation></semantics></math> noise. This is necessary to create colors in between the three already present, as opposed to lighter or darker shades of them.<br />
+<br />
+</span></span> with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℓ</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">\ell=3</annotation></semantics></math> (TC) creates more natural looking boundaries, and a finished painting:</p>
+<p><img src="/static/img/rothko/final_rothko.png" alt="Full painting" style="width: 300px;"/></p>
+<p>More results are shown in <a href="https://drive.google.com/drive/folders/1VGDbQmG6vbQgCYtN6e5rs67O8PzwVDXQ?usp=sharing">this folder</a>.</p>
+<h3 id="conclusion">4. Conclusion</h3>
+<p>I’m happy with the results I got. They look significantly better than just uniformly filling pixels in with the same value (see <a href="https://twitter.com/colorschemez?lang=en">here</a> for an example of what that looks like). But do they look like Rothkos?</p>
+<p>The answer is definitely some kind of no, but it’s hard to pin it down exactly. While working on this, I talked to several people about what features of Rothko’s work were most significant and why. Responses varied wildly. Some people insisted that the rectangles were not just solid blocks of color and it was the subtle variations within them that gave the painting life, but others claimed the whole point was that the blocks of color were entirely homogeneous. Tuning the zoo of constants in this algorithm was a nightmare partially because I could never decide whether the outputs were getting better or worse, whether they needed more variation or less, smoother borders or rougher.</p>
+<p>Rothko’s work is actually not even internally consistent in many regards, a fact that compounds this problem. The panels of color in <a href="http://www.markrothko.org/number-13/">this painting</a> range from clearly texture to totally uniform. My patches look a bit like the bottom-most one, but nothing like the top one - have I really missed my mark?</p>
+<p>This is trite, but I think this kind of evaluation, asking what it means to be like a Rothko and discovering how ill-posed that question is, deeply underscores the limits of this kind of art. There is some ineffable Rothko-quality to Rothko’s paintings, an intentionality and personality of their physical form, that is too inconstant to ever be captured algorithmically.<span><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"/><span class="sidenote">A more concrete manifestation of this quality is the differences in number and positioning of rectangles across his work (which I didn’t even bother trying to probe), and also maybe his selection of colors.<br />
+<br />
+</span></span></p>
+<p>My original interest though, was whether random processes were even plausible models for things like painting and I think the answer to this is definitely some kind of yes. The process I ended up with was a little silly, a little involved, but it did give visually appealing results, which means that even just coin flips and random numbers give you enough to approximate an activity as seemingly mysterious as painting. I’m not sure how far this goes in terms of grounding statistical practices, since we typically consider a much more restricted class of processes in those settings, but it’s nice to know that randomness is rich enough as a phenomenon to do such diverse things.</p>
+</body>
+</html>
+
+  
+  </article>
+
+  </div>
+  <div class="thefooter">
+    <p>Made with Athena
+    <br><br>Copyright, <i>2016</i></p>
+  </div> <!-- footer end -->
+</body>
+</html>
