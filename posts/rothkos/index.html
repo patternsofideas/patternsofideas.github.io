@@ -41,7 +41,7 @@
         about</a>
     </span></p>
 
-    <subtitle class="sub-date">December 24, 2018 · <span style="font-size: 1.6rem;"><a style="border-bottom-width: 0px !important;" href="/posts/rothkos/">&infin;</a></span></subtitle>
+    <subtitle class="sub-date">December 27, 2018 · <span style="font-size: 1.6rem;"><a style="border-bottom-width: 0px !important;" href="/posts/rothkos/">&infin;</a></span></subtitle>
 
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -53,7 +53,7 @@
   <style type="text/css">code{white-space: pre;}</style>
 </head>
 <body>
-<p>(If you just came here to see some random Rothkos, you can find them <a href="https://drive.google.com/drive/folders/1VGDbQmG6vbQgCYtN6e5rs67O8PzwVDXQ?usp=sharing">here</a>.)</p>
+<p>(If you just came to see some random Rothkos, you can find them <a href="https://drive.google.com/drive/folders/1VGDbQmG6vbQgCYtN6e5rs67O8PzwVDXQ?usp=sharing">here</a>.)</p>
 <p>Now that I’m done applying to grad school, I have tons of time to try new things I’ve always meant to try. A big one of these is generative art, which I’ve been curious about ever since I saw <a href="https://www.tate.org.uk/art/artworks/nake-no-title-p80816">this piece</a>. This curiosity bubbled over when I saw a <a href="http://www.markrothko.org/paintings/">Rothko</a> on a friend’s wall and got into a conversation about the possibility of generating similar paintings with a computer, which I promptly proceeded to try.</p>
 <p>To be clear, I love Rothkos and this is not at all in the spirit of “well I could’ve done that too”. Instead, I’m mostly interested in how accurately something like painting can be modeled by a random process, since assumptions of this kind underlie a lot of applied statistical work. This means the goal here is really to make images that look as much like real Rothko paintings as possible. It’s not enough to make visually interesting images inspired by Rothko’s work (which I think I succeeded at) - I want to make things that really look like they could have been made by Rothko (which, spoiler, I don’t think I succeeded at).</p>
 <p>The general template for the paintings I made was the particular kind of Rothko that has two vertically aligned rectangles of different sizes, filled with two different colors, set against a background of a third color (e.g. <a href="http://www.markrothko.org/dark-over-light-earth/">this one</a> or <a href="http://www.markrothko.org/green-and-tangerine-on-red/">this one</a>). The process I developed is somewhat contrived; in particular, there are a lot of arbitrary constants involved that I chose by trying different values and judging the results with my eye. These are marked throughout by a parenthetical TC, for tuned constant.</p>
@@ -110,7 +110,7 @@
 <h3 id="conclusion">4. Conclusion</h3>
 <p>I’m happy with the results I got. They look significantly better than just uniformly filling pixels in with the same value (see <a href="https://twitter.com/colorschemez?lang=en">here</a> for an example of what that looks like). But do they look like Rothkos?</p>
 <p>The answer is definitely some kind of no, but it’s hard to pin it down exactly. While working on this, I talked to several people about what features of Rothko’s work were most significant and why. Responses varied wildly. Some people insisted that the rectangles were not just solid blocks of color and it was the subtle variations within them that gave the painting life, but others claimed the whole point was that the blocks of color were entirely homogeneous. Tuning the zoo of constants in this algorithm was a nightmare partially because I could never decide whether the outputs were getting better or worse, whether they needed more variation or less, smoother borders or rougher.</p>
-<p>Rothko’s work is actually not even internally consistent in many regards, a fact that compounds this problem. The panels of color in <a href="http://www.markrothko.org/number-13/">this painting</a> range from clearly texture to totally uniform. My patches look a bit like the bottom-most one, but nothing like the top one - have I really missed my mark?</p>
+<p>Rothko’s work is actually not even internally consistent in many regards, a fact that compounds this problem. The panels of color in <a href="http://www.markrothko.org/number-13/">this painting</a> range from clearly textured to totally uniform. My patches look a bit like the bottom-most one, but nothing like the top one - have I really missed my mark?</p>
 <p>This is trite, but I think this kind of evaluation, asking what it means to be like a Rothko and discovering how ill-posed that question is, deeply underscores the limits of this kind of art. There is some ineffable Rothko-quality to Rothko’s paintings, an intentionality and personality of their physical form, that is too inconstant to ever be captured algorithmically.<span><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"/><span class="sidenote">A more concrete manifestation of this quality is the differences in number and positioning of rectangles across his work (which I didn’t even bother trying to probe), and also maybe his selection of colors.<br />
 <br />
 </span></span></p>
