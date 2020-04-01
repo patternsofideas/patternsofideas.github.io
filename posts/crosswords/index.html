@@ -2,13 +2,11 @@
 <head>
   <meta charset="utf-8"/>
   <title>Q&amp;A With the NYT Crossword Archive &mdash; Patterns of Ideas</title>
-  <link rel="stylesheet" type="text/css" href="/static/tufte.css">
-  <link rel="stylesheet" type="text/css" href="/static/latex.min.css">
-  <link rel="stylesheet" type="text/css" href="/static/pygments.min.css">
-  <script type="text/javascript" src="/static/enquire.min.js"></script>
-  <script type="text/javascript" src="/static/jquery-1.12.4.min.js"></script>
-  <script type="text/javascript" src="/static/resources.min.js"></script>
-  <script type="text/javascript" src="/static/LaTeXMathML.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="/static/sdist/e5e8436da5bd13834d31e16c0f179529.css">
+
+  <script type="text/javascript" src="/static/sdist/c752cd137614177858641b78f67df408.js"></script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel='shortcut icon' href="/static/favicon.ico" type='image/x-icon'/>
   <style type="text/css">
@@ -18,12 +16,12 @@
   <meta property="og:title" content="Q&amp;A With the NYT Crossword Archive" />
   <meta property="og:type" content="website" />
   <meta property="og:description" content="Some analysis of the NYT crossword archive." />
-  <meta property="og:url" content="/posts/crosswords/" />
+  <meta property="og:url" content="http://localhost/posts/crosswords/" />
   <meta property="og:image" content="/static/img/athena.png" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Q&amp;A With the NYT Crossword Archive" />
   <meta name="twitter:description" content="Some analysis of the NYT crossword archive." />
-  <meta name="twitter:url" content="/posts/crosswords/" />
+  <meta name="twitter:url" content="http://localhost/posts/crosswords/" />
   <meta name="twitter:image" content="/static/img/athena.png" />
   <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 </head>
@@ -34,29 +32,40 @@
   
     <h1>Q&amp;A With the NYT Crossword Archive</h1>
     <p id="blog-p"><span id="blogdesc" class="marginnote">
-    A personal blog by Samir Khan<br><br>
     <a href="/">home</a> ·
     
       <a href="/about/">
         about</a>
     </span></p>
 
-    <subtitle class="sub-date">June 15, 2017 · <span style="font-size: 1.6rem;"><a style="border-bottom-width: 0px !important;" href="/posts/crosswords/">&infin;</a></span></subtitle>
+    <subtitle class="sub-date">June 15, 2017 · <span
+    style="font-size: 1.6rem;"><a style="border-bottom-width: 0px !important;"
+    href="http://localhost/posts/crosswords/">&infin;</a></span></subtitle>
 
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+    <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
-<h2 id="introduction">1. Introduction</h2>
+<h2>1. Introduction</h2>
 <p>I’ve been doing a lot of crosswords lately, so I thought I’d spend some time playing around with old crosswords to see if there was anything interesting to say about them. This whole post is structured as a series of questions I or other people asked, which I then answered using data from <a href="https://github.com/doshea/nyt_crosswords">this repository</a>. If there’s anything not covered here you’d like to know about, feel free to get in touch with me!</p>
 <p>Just for reference, there are 1229405 clue/answer pairs, taken from 14524 puzzles. After throwing out duplicates, there are 140628 distinct answers, and 696050 distinct clues.</p>
-<h2 id="the-words">2. The Words</h2>
+<h2>2. The Words</h2>
 <p><strong>Question.</strong> <em>What are the most common words?</em></p>
 <p>It turns out that these are almost exclusively short, vowel-rich words, with the top 5 being:</p>
 <table style="width:450px;height:246px;">
@@ -172,7 +181,7 @@
 </tbody>
 </table>
 <p>Just to take a peek under the hood, all of the distinct clues for ERA can be seen <a href="../../static/img/crosswords/clues-for-era.pdf">here</a>., and they seem to fall into three categories:</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>ERA like the time period</li>
 <li>ERA like the baseball statistic</li>
 <li>ERA like the Equal Rights Amendment</li>
@@ -312,7 +321,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="the-clues">3. The Clues</h2>
+<h2>3. The Clues</h2>
 <p><strong>Question.</strong> <em>What are the most common clues?</em></p>
 <p>No real pattern to these:</p>
 <table style="width:350px;height:250px;">
@@ -437,7 +446,7 @@ Note that I’m omitting “Jai ___” and “Gaelic” for variety’s sake. As
 <p>And we’re back to not much:</p>
 <p><img src="/static/img/crosswords/vowels_days.png" alt="Vowels by days" style="width: 600px;"/></p>
 <p>So it seems like puns best capture the difficulty gradient of the week.</p>
-<h2 id="the-years">4. The Years</h2>
+<h2>4. The Years</h2>
 <p><strong>Question.</strong> <em>How does the length of words vary over the years?</em></p>
 <p>In strange and inconsistent ways:</p>
 <p><img src="/static/img/crosswords/year_length.png" alt="Lengths by year" style="width: 600px;"/></p>
@@ -457,7 +466,7 @@ Note that I’m omitting “Jai ___” and “Gaelic” for variety’s sake. As
 
   </div>
   <div class="thefooter">
-    <p>Made with Athena
+    <p>
     <br><br>Copyright, <i>2016</i></p>
   </div> <!-- footer end -->
 </body>

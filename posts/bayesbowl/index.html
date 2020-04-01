@@ -2,13 +2,11 @@
 <head>
   <meta charset="utf-8"/>
   <title>Sabermetrics, but for Quizbowl &mdash; Patterns of Ideas</title>
-  <link rel="stylesheet" type="text/css" href="/static/tufte.css">
-  <link rel="stylesheet" type="text/css" href="/static/latex.min.css">
-  <link rel="stylesheet" type="text/css" href="/static/pygments.min.css">
-  <script type="text/javascript" src="/static/enquire.min.js"></script>
-  <script type="text/javascript" src="/static/jquery-1.12.4.min.js"></script>
-  <script type="text/javascript" src="/static/resources.min.js"></script>
-  <script type="text/javascript" src="/static/LaTeXMathML.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="/static/sdist/e5e8436da5bd13834d31e16c0f179529.css">
+
+  <script type="text/javascript" src="/static/sdist/c752cd137614177858641b78f67df408.js"></script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel='shortcut icon' href="/static/favicon.ico" type='image/x-icon'/>
   <style type="text/css">
@@ -18,12 +16,12 @@
   <meta property="og:title" content="Sabermetrics, but for Quizbowl" />
   <meta property="og:type" content="website" />
   <meta property="og:description" content="Modeling quizbowl buzzes according to a Dirichlet process, and using this to simulate matches" />
-  <meta property="og:url" content="/posts/bayesbowl/" />
+  <meta property="og:url" content="http://localhost/posts/bayesbowl/" />
   <meta property="og:image" content="/static/img/athena.png" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Sabermetrics, but for Quizbowl" />
   <meta name="twitter:description" content="Modeling quizbowl buzzes according to a Dirichlet process, and using this to simulate matches" />
-  <meta name="twitter:url" content="/posts/bayesbowl/" />
+  <meta name="twitter:url" content="http://localhost/posts/bayesbowl/" />
   <meta name="twitter:image" content="/static/img/athena.png" />
   <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 </head>
@@ -34,41 +32,52 @@
   
     <h1>Sabermetrics, but for Quizbowl</h1>
     <p id="blog-p"><span id="blogdesc" class="marginnote">
-    A personal blog by Samir Khan<br><br>
     <a href="/">home</a> ·
     
       <a href="/about/">
         about</a>
     </span></p>
 
-    <subtitle class="sub-date">February 11, 2018 · <span style="font-size: 1.6rem;"><a style="border-bottom-width: 0px !important;" href="/posts/bayesbowl/">&infin;</a></span></subtitle>
+    <subtitle class="sub-date">February 11, 2018 · <span
+    style="font-size: 1.6rem;"><a style="border-bottom-width: 0px !important;"
+    href="http://localhost/posts/bayesbowl/">&infin;</a></span></subtitle>
 
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+    <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
 <p>Quizbowl, which I compete in at UChicago, is like Jeopardy, but with teams. Each team has four players, and whichever team buzzes in first and answers a tossup question correctly gets points, as well as the exclusive chance to answer some bonus questions for more points. After a fixed number of questions, the team with the most points wins. Many efforts are made to reduce the variance of this process, like constructing questions to reward more knowledgable teams and balancing different categories of question in every match, but there are still plenty of surprises over the course of a season.</p>
 <p>Quizbowlers are quite caught up in all this - trying to figure out which teams are better than others, which players are better than others, and what to expect from a given match or tournament. To this end, there’s been a recent trend of collecting extremely detailed data from tournaments, specifically the exact point at where every single player buzzed on every single question. This post tries to use that data from a specific tournament to give concrete predictions about matches. That is, how likely is it that any one team will beat another?</p>
 <p>For one team to beat another, they have to score more points than them. Points are scored by getting tossups and getting bonuses. For tossups, we have the buzzpoint information. For bonuses, we have the average number of points a team got across all bonuses. So we can decide which team wins a match by deciding how many tossups each will get, giving them points for all of those, as well as their average number of bonus points for each tossup, and comparing scores.</p>
 <p>For a team to get a tossup, they have to buzz in before the other team and answer correctly. This means the object we need to model is the distribution of a team’s buzzpoints, so that we can compare these between teams and determine who buzzed first.</p>
-<h3 id="the-distribution-of-buzzpoints">1. The Distribution of Buzzpoints</h3>
+<h2>1. The Distribution of Buzzpoints</h2>
 <p>I took a non-parametric approach to modeling the distribution of buzzpoints, treating it as coming from a Dirichlet process, which is a distribution over distributions that can be updated based on observations. The idea is that, given a team I know nothing about, I have a baseline belief about the distribution of their distribution of buzzpoints and a measure of strength in that belief. Then, as I observe them buzzing on questions, I perform a Bayesian update on that distribution over distributions, and use the posterior mean as an estimate of the distribution of the team’s buzzpoints. This is a little abstract, but essentially, instead of updating a single probability based on evidence as we do in standard Bayesian analysis, we’re updating a collection of probabilities in the form of a distribution based on evidence.</p>
 <p>More formally, my initial belief of a team’s buzzzpoint distribution is a <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">DP</mtext><mo stretchy="false" form="prefix">(</mo><mn>3</mn><mo>,</mo><mi>F</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\text{DP}(3, F)</annotation></semantics></math> where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>F</mi><annotation encoding="application/x-tex">F</annotation></semantics></math> is the distribution function <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">F(x)=x^2</annotation></semantics></math>, since this corresponds to a linear density and thus matches the idea that quizbowl questions get easier as they progress. The choice of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">\alpha=3</annotation></semantics></math> is fairly arbitrary, but varying it did not significantly affect results. After observing <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math> buzzes with empirical distribution <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>F</mi><mi>n</mi></msub><annotation encoding="application/x-tex">F_n</annotation></semantics></math>, we update our belief to a <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">DP</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mi>n</mi><mo>+</mo><mn>3</mn><mo>,</mo><mfrac><mi>n</mi><mrow><mi>n</mi><mo>+</mo><mn>3</mn></mrow></mfrac><msub><mi>F</mi><mi>n</mi></msub><mo>+</mo><mfrac><mn>3</mn><mrow><mi>n</mi><mo>+</mo><mn>3</mn></mrow></mfrac><mi>F</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">\text{DP}\left(n+3, \frac{n}{n+3}F_n+\frac{3}{n+3}F\right),</annotation></semantics></math> which has mean <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mi>n</mi><mrow><mi>n</mi><mo>+</mo><mn>3</mn></mrow></mfrac><msub><mi>F</mi><mi>n</mi></msub><mo>+</mo><mfrac><mn>3</mn><mrow><mi>n</mi><mo>+</mo><mn>3</mn></mrow></mfrac><mi>F</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">\frac{n}{n+3}F_n+\frac{3}{n+3}F.</annotation></semantics></math> This posterior mean is a mixture distribution, both components of which can easily be sampled from.</p>
 <p>The upshot of all of this is that, given two teams, we can sample a sequence of buzzpoints for each, and decide who would get each question by comparing those buzzpoints.</p>
 <p>Some thorny details to worry about: where a team buzzes on a tossup is highly dependent on the subject being asked about. For example, a team might be excellent at literature but abysmal at current events. This means that you might be updating a distribution of literature buzzpoints based on a current events question, which is obviously the wrong thing to do. The fix here is to keep a separate distribution for every category, and make the appropriate number of draws from each category when simulating a match.</p>
 <p>Another issue is that teams sometimes buzz first, but answer incorrectly. The way to handle this is to keep track of the rate at which a team does this in each category, and then have them buzz first but lose the tossup anyway at that rate. Relatedly, not every team buzzes on every tossup, and some tossups are not answered at all. We can handle this similarly, by keeping track of the rate at which a team buzzes on tossups in a category, and drawing a buzz at that same rate.</p>
-<h3 id="a-case-study">2. A Case Study</h3>
+<h2>2. A Case Study</h2>
 <p>To recap, our process for simulating a match between two teams is:</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Determine the posterior distribution of buzzpoints in each category for both teams by updating a Dirichlet process prior based on observed buzzes</li>
 <li>In each category, have the teams “play” as many questions of that category as there are in a match. Playing a tossup here consists of doing the following for both teams:
-<ol style="list-style-type: lower-alpha">
+<ol type="a">
 <li>Having them buzz with probability given by the number of questions they buzzed on in this category divided by the number of questions they heard in this category</li>
 <li>If they buzz, determine the point at which they buzz by sampling from the posterior</li>
 <li>Have them answer wrong with probability given by the number of questions they answered wrong on in this category divided by the number of questions they buzzed on in this category</li>
@@ -88,7 +97,7 @@
 
   </div>
   <div class="thefooter">
-    <p>Made with Athena
+    <p>
     <br><br>Copyright, <i>2016</i></p>
   </div> <!-- footer end -->
 </body>

@@ -2,13 +2,11 @@
 <head>
   <meta charset="utf-8"/>
   <title>Keyboard Phonetics &mdash; Patterns of Ideas</title>
-  <link rel="stylesheet" type="text/css" href="/static/tufte.css">
-  <link rel="stylesheet" type="text/css" href="/static/latex.min.css">
-  <link rel="stylesheet" type="text/css" href="/static/pygments.min.css">
-  <script type="text/javascript" src="/static/enquire.min.js"></script>
-  <script type="text/javascript" src="/static/jquery-1.12.4.min.js"></script>
-  <script type="text/javascript" src="/static/resources.min.js"></script>
-  <script type="text/javascript" src="/static/LaTeXMathML.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="/static/sdist/e5e8436da5bd13834d31e16c0f179529.css">
+
+  <script type="text/javascript" src="/static/sdist/c752cd137614177858641b78f67df408.js"></script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel='shortcut icon' href="/static/favicon.ico" type='image/x-icon'/>
   <style type="text/css">
@@ -18,12 +16,12 @@
   <meta property="og:title" content="Keyboard Phonetics" />
   <meta property="og:type" content="website" />
   <meta property="og:description" content="Some exploration of the relationship between positions of letters on a keyboard and their phonetic properties." />
-  <meta property="og:url" content="/posts/qwerty/" />
+  <meta property="og:url" content="http://localhost/posts/qwerty/" />
   <meta property="og:image" content="/static/img/athena.png" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Keyboard Phonetics" />
   <meta name="twitter:description" content="Some exploration of the relationship between positions of letters on a keyboard and their phonetic properties." />
-  <meta name="twitter:url" content="/posts/qwerty/" />
+  <meta name="twitter:url" content="http://localhost/posts/qwerty/" />
   <meta name="twitter:image" content="/static/img/athena.png" />
   <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 </head>
@@ -34,29 +32,40 @@
   
     <h1>Keyboard Phonetics</h1>
     <p id="blog-p"><span id="blogdesc" class="marginnote">
-    A personal blog by Samir Khan<br><br>
     <a href="/">home</a> ·
     
       <a href="/about/">
         about</a>
     </span></p>
 
-    <subtitle class="sub-date">July 19, 2018 · <span style="font-size: 1.6rem;"><a style="border-bottom-width: 0px !important;" href="/posts/qwerty/">&infin;</a></span></subtitle>
+    <subtitle class="sub-date">July 19, 2018 · <span
+    style="font-size: 1.6rem;"><a style="border-bottom-width: 0px !important;"
+    href="http://localhost/posts/qwerty/">&infin;</a></span></subtitle>
 
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+    <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
 <p>I was staring at my keyboard a few days ago, and I noticed the facts that (i) the F and V keys are right next to each other (ii) F and V are both the same kind of sound, specifically a <a href="https://www.wikiwand.com/en/Fricative_consonant">fricative</a>. I then noticed a few more: the <a href="https://www.wikiwand.com/en/Stop_consonant">stops</a> T and D are also nearly adjacent, as are the <a href="https://www.wikiwand.com/en/Nasal_consonant">nasals</a> M and N. This post is an attempt to figure out whether or not all this is a coincidence.</p>
 <p>Here is an argument for why it is not a coincidence. To the best of my understanding, the QWERTY keyboard tries to keep pairs of letters that frequently appear together in text apart in the keyboard. Conversely, it must keep letters that rarely occur together in text close in the keyboard. Since you would rarely have the same sound appear twice in a row in any word, letters that make similar sounds should be pushed together.</p>
 <p>Here is an argument for why the previous argument is wrong. Letters do not map neatly onto sounds, especially not in English: one letter can make many different sounds, and one sound can come from many different letters. This makes the line from certain sounds not appearing together in spoken words, to certain letters not appearing together in the spellings of those words, to those letters appearing close together on the keyboard tenuous at best and non-existent at worse.</p>
-<p>I’m personally pretty convinced by both of these arguments, so I tried to do something more conclusive. Specifically, I first enlisted a friend of mine who studies linguistics to group the English letters phonetically based on the sounds they typically make.<span><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"/><span class="sidenote">Note that some letters, like C, appear in multiple groups<br />
+<p>I’m personally pretty convinced by both of these arguments, so I tried to do something more conclusive. Specifically, I first enlisted a friend of mine who studies linguistics to group the English letters phonetically based on the sounds they typically make.<span><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle"/><span class="sidenote">Note that some letters, like C, appear in multiple groups<br />
 <br />
 </span></span> The groups she gave me were:</p>
 <ul>
@@ -68,7 +77,7 @@
 <li>Fricatives: F, H, S, Z, X, C, V</li>
 </ul>
 <p>We can measure how well a keyboard layout keeps each of these groups together by taking the average of the pairwise distances on the keyboard between all the letters in a group. For our purposes, the distance between two keys on the keyboard is just the horizontal distance plus the vertical distance, treating the keys as a grid. So for example, the distance between Q and Z is 2, while the distance between T and J is 3.</p>
-<p>Then, we can see if the QWERTY keyboard does an unusually good or bad job keeping these groups together by randomly generating an ensemble of alternative keyboards, computing the average group distance for each of those, and seeing how they compare to QWERTY. Doing this with 100,000 random keyboards gives the following picture<span><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"/><span class="sidenote">The different bin numbers are because some of the groups, like nasals, can only have integer values<br />
+<p>Then, we can see if the QWERTY keyboard does an unusually good or bad job keeping these groups together by randomly generating an ensemble of alternative keyboards, computing the average group distance for each of those, and seeing how they compare to QWERTY. Doing this with 100,000 random keyboards gives the following picture<span><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"/><span class="sidenote">The different bin numbers are because some of the groups, like nasals, can only have integer values<br />
 <br />
 </span></span>:</p>
 <p><img src="/static/img/qwerty/phonetic_distances.png" alt="Phonetic distances" style="width: 1000px;"/></p>
@@ -86,7 +95,7 @@
 
   </div>
   <div class="thefooter">
-    <p>Made with Athena
+    <p>
     <br><br>Copyright, <i>2016</i></p>
   </div> <!-- footer end -->
 </body>

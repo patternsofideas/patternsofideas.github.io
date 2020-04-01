@@ -2,13 +2,11 @@
 <head>
   <meta charset="utf-8"/>
   <title>Martingale Convergence &mdash; Patterns of Ideas</title>
-  <link rel="stylesheet" type="text/css" href="/static/tufte.css">
-  <link rel="stylesheet" type="text/css" href="/static/latex.min.css">
-  <link rel="stylesheet" type="text/css" href="/static/pygments.min.css">
-  <script type="text/javascript" src="/static/enquire.min.js"></script>
-  <script type="text/javascript" src="/static/jquery-1.12.4.min.js"></script>
-  <script type="text/javascript" src="/static/resources.min.js"></script>
-  <script type="text/javascript" src="/static/LaTeXMathML.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="/static/sdist/e5e8436da5bd13834d31e16c0f179529.css">
+
+  <script type="text/javascript" src="/static/sdist/c752cd137614177858641b78f67df408.js"></script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel='shortcut icon' href="/static/favicon.ico" type='image/x-icon'/>
   <style type="text/css">
@@ -18,12 +16,12 @@
   <meta property="og:title" content="Martingale Convergence" />
   <meta property="og:type" content="website" />
   <meta property="og:description" content="A proof of the martingale convergence theorem." />
-  <meta property="og:url" content="/posts/martingale/" />
+  <meta property="og:url" content="http://localhost/posts/martingale/" />
   <meta property="og:image" content="/static/img/athena.png" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Martingale Convergence" />
   <meta name="twitter:description" content="A proof of the martingale convergence theorem." />
-  <meta name="twitter:url" content="/posts/martingale/" />
+  <meta name="twitter:url" content="http://localhost/posts/martingale/" />
   <meta name="twitter:image" content="/static/img/athena.png" />
   <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 </head>
@@ -34,42 +32,53 @@
   
     <h1>Martingale Convergence</h1>
     <p id="blog-p"><span id="blogdesc" class="marginnote">
-    A personal blog by Samir Khan<br><br>
     <a href="/">home</a> ·
     
       <a href="/about/">
         about</a>
     </span></p>
 
-    <subtitle class="sub-date">January 16, 2017 · <span style="font-size: 1.6rem;"><a style="border-bottom-width: 0px !important;" href="/posts/martingale/">&infin;</a></span></subtitle>
+    <subtitle class="sub-date">January 16, 2017 · <span
+    style="font-size: 1.6rem;"><a style="border-bottom-width: 0px !important;"
+    href="http://localhost/posts/martingale/">&infin;</a></span></subtitle>
 
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+    <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
-  <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
 </head>
 <body>
 <p>Last quarter, I did a DRP on martingales, and at the start of this quarter, gave a short talk on what I learned. Here are the notes from that talk.</p>
-<h2 id="conditional-expectation">1. Conditional Expectation</h2>
+<h2>1. Conditional Expectation</h2>
 <p><strong>Definition 1.</strong> Suppose <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>Ω</mi><mo>,</mo><msub><mstyle mathvariant="script"><mi>ℱ</mi></mstyle><mi>o</mi></msub><mo>,</mo><mstyle mathvariant="double-struck"><mi>ℙ</mi></mstyle><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\Omega, \mathcal{F}_o, \mathbb{P})</annotation></semantics></math> is a probability space, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathvariant="script"><mi>ℱ</mi></mstyle><mo>⊂</mo><msub><mstyle mathvariant="script"><mi>ℱ</mi></mstyle><mi>o</mi></msub></mrow><annotation encoding="application/x-tex">\mathcal{F}\subset \mathcal{F}_o</annotation></semantics></math> is a sub <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>-algebra, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math> is a random variable.</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><p>The conditional expectation of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math> given <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mstyle mathvariant="script"><mi>ℱ</mi></mstyle><annotation encoding="application/x-tex">\mathcal{F}</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>∣</mo><mstyle mathvariant="script"><mi>ℱ</mi></mstyle><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">E(X\mid \mathcal{F})</annotation></semantics></math>, is any <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mstyle mathvariant="script"><mi>ℱ</mi></mstyle><annotation encoding="application/x-tex">\mathcal{F}</annotation></semantics></math>-measurable random variable <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math> such that <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>∫</mo><mi>A</mi></msub><mi>X</mi><mspace width="0.167em"></mspace><mi>d</mi><mstyle mathvariant="double-struck"><mi>ℙ</mi></mstyle><mo>=</mo><msub><mo>∫</mo><mi>A</mi></msub><mi>Y</mi><mspace width="0.167em"></mspace><mi>d</mi><mstyle mathvariant="double-struck"><mi>ℙ</mi></mstyle><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> for all </mtext><mspace width="0.333em"></mspace></mrow><mi>A</mi><mo>∈</mo><mstyle mathvariant="script"><mi>ℱ</mi></mstyle><mi>.</mi></mrow><annotation encoding="application/x-tex">\int_A X\, d\mathbb{P}=\int_A Y\, d\mathbb{P}\text{ for all } A\in \mathcal{F}.</annotation></semantics></math></p></li>
 <li><p>If <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math> is another random variable, then <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>∣</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">E(X\mid Y)</annotation></semantics></math> is defined as <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>∣</mo><mstyle mathvariant="script"><mi>ℱ</mi></mstyle><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">E(X\mid \mathcal{F})</annotation></semantics></math> where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mstyle mathvariant="script"><mi>ℱ</mi></mstyle><annotation encoding="application/x-tex">\mathcal{F}</annotation></semantics></math> is the <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>-algebra generated by <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math>.</p></li>
 </ol>
 <p><em>Fact.</em> The conditional expectation exists, is unique, and is integrable.</p>
 <p>Intuitively, we can think of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>∣</mo><mstyle mathvariant="script"><mi>ℱ</mi></mstyle><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">E(X\mid \mathcal{F})</annotation></semantics></math> as the best guess of the value of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math> given the information available in <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mstyle mathvariant="script"><mi>ℱ</mi></mstyle><annotation encoding="application/x-tex">\mathcal{F}</annotation></semantics></math>.</p>
 <p><strong>Example 1.</strong> Some conditional expectations:</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><p>If <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math> is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mstyle mathvariant="script"><mi>ℱ</mi></mstyle><annotation encoding="application/x-tex">\mathcal{F}</annotation></semantics></math>-measurable, then <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>∣</mo><mstyle mathvariant="script"><mi>ℱ</mi></mstyle><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>X</mi></mrow><annotation encoding="application/x-tex">E(X\mid \mathcal{F})=X</annotation></semantics></math>.</p></li>
 <li><p>If <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>X</mi><annotation encoding="application/x-tex">X</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math> are independent, then <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo>∣</mo><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>E</mi><mo stretchy="false" form="prefix">(</mo><mi>X</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">E(X\mid Y)=E(X)</annotation></semantics></math>.</p></li>
 <li><p>Let <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>X</mi><mn>1</mn></msub><mo>,</mo><mi>⋯</mi></mrow><annotation encoding="application/x-tex">X_1,\cdots</annotation></semantics></math> be random variables with mean <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math>, and let <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><msub><mi>X</mi><mn>1</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>X</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">S_n=X_1+\cdots+X_n</annotation></semantics></math> be the partial sums. Then, if <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>&gt;</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">m&gt;n</annotation></semantics></math>, <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>S</mi><mi>m</mi></msub><mo>∣</mo><msub><mi>S</mi><mi>n</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>E</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mi>m</mi></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>X</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>+</mo><msub><mi>S</mi><mi>n</mi></msub><mo>∣</mo><msub><mi>S</mi><mi>n</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>E</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mi>m</mi></msub><mo>∣</mo><msub><mi>S</mi><mi>n</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>⋯</mi><mo>+</mo><mi>E</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>∣</mo><msub><mi>S</mi><mi>n</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>E</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>S</mi><mi>n</mi></msub><mo>∣</mo><msub><mi>S</mi><mi>n</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>μ</mi><mo stretchy="false" form="prefix">(</mo><mi>m</mi><mo>−</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><msub><mi>S</mi><mi>n</mi></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">E(S_m\mid S_n)=E(X_m+\cdots+X_{n+1}+S_n\mid S_n)=E(X_m\mid S_n)+\cdots+E(X_{n+1}\mid S_n)+E(S_n\mid S_n)=\mu(m-n)+S_n.</annotation></semantics></math> The idea is that you know your position at <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>S</mi><mi>n</mi></msub><annotation encoding="application/x-tex">S_n</annotation></semantics></math>, and you take <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>−</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">m-n</annotation></semantics></math> steps whose sizes are, on average, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math>, so your best guess for your position is <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>S</mi><mi>n</mi></msub><mo>+</mo><mi>μ</mi><mo stretchy="false" form="prefix">(</mo><mi>m</mi><mo>−</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">S_n+\mu(m-n)</annotation></semantics></math>.</p></li>
 </ol>
 <p>Now we can define martingales.</p>
-<h2 id="martingales">2. Martingales</h2>
+<h2>2. Martingales</h2>
 <p>A martingale is a model of a fair game.</p>
 <p><strong>Definition 2.</strong> Consider a filtration (increasing sequence of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>-algebras) <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mstyle mathvariant="script"><mi>ℱ</mi></mstyle><mi>n</mi></msub><annotation encoding="application/x-tex">\mathcal{F}_n</annotation></semantics></math> and a sequence of random variables <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mi>n</mi></msub><annotation encoding="application/x-tex">X_n</annotation></semantics></math>, each measurable with respect to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mstyle mathvariant="script"><mi>ℱ</mi></mstyle><mi>n</mi></msub><annotation encoding="application/x-tex">\mathcal{F}_n</annotation></semantics></math> and integrable. Then, if <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>∣</mo><msub><mstyle mathvariant="script"><mi>ℱ</mi></mstyle><mi>n</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>X</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">E(X_{n+1}\mid \mathcal{F}_n)=X_n</annotation></semantics></math> for all <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>, we say <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>S</mi><mi>n</mi></msub><annotation encoding="application/x-tex">S_n</annotation></semantics></math> is a martingale.</p>
 <p><strong>Example 2.</strong> Let <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>X</mi><mn>1</mn></msub><mo>,</mo><mi>⋯</mi></mrow><annotation encoding="application/x-tex">X_1,\cdots</annotation></semantics></math> be random variables that take only the values <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math> with probability <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">1/2</annotation></semantics></math> each. Then <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><msub><mi>X</mi><mn>1</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>X</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">S_n=X_1+\cdots+ X_n</annotation></semantics></math> is a martingale, because <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>S</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>∣</mo><msub><mi>S</mi><mi>n</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>E</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>+</mo><msub><mi>S</mi><mi>n</mi></msub><mo>∣</mo><msub><mi>S</mi><mi>n</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>E</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>∣</mo><msub><mi>S</mi><mi>n</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mi>E</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>S</mi><mi>n</mi></msub><mo>∣</mo><msub><mi>S</mi><mi>n</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>E</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>X</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo stretchy="false" form="postfix">)</mo><mo>+</mo><msub><mi>S</mi><mi>n</mi></msub><mo>=</mo><msub><mi>S</mi><mi>n</mi></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">E(S_{n+1}\mid S_n)=E(X_{n+1}+S_n\mid S_n)=E(X_{n+1}\mid S_n)+E(S_n\mid S_n)=E(X_{n+1})+S_n=S_n.</annotation></semantics></math></p>
@@ -90,7 +99,7 @@
 
   </div>
   <div class="thefooter">
-    <p>Made with Athena
+    <p>
     <br><br>Copyright, <i>2016</i></p>
   </div> <!-- footer end -->
 </body>

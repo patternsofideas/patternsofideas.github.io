@@ -1,7 +1,52 @@
-/* 
+/*
    Tufte CSS with custom athena modifications
    Tufte CSS available at: https://edwardtufte.github.io/tufte-css/
 */
+
+a.heading-anchor {
+    text-decoration: none;
+    border-bottom: none;
+    padding-bottom: 0px
+}
+
+#bibliography .heading-anchor,
+h2 .heading-anchor,
+h3 .heading-anchor {
+    position: absolute;
+    left: 0;
+    padding-right: 1em;
+    margin-left: -1em;
+    display: none;
+    font-size: .8em;
+    padding-top: 5px;
+    /* padding-left: 5px; */
+    color: #777;
+    text-decoration: none;
+    font-weight: 200
+}
+
+#bibliography .heading-anchor:hover,
+h2 .heading-anchor:hover,
+h3 .heading-anchor:hover,
+#bibliography:hover>.heading-anchor,
+h2:hover>.heading-anchor,
+h3:hover>.heading-anchor {
+    display: inline-block
+}
+
+@media (max-width:1200px) {
+    #bibliography .heading-anchor,
+    h2 .heading-anchor,
+    h3 .heading-anchor {
+        position: relative;
+        display: inline-block;
+        left: 0;
+        padding-top: 0;
+        margin-left: 0;
+        padding-right: 0;
+        padding-left: 5px
+    }
+}
 
 @font-face { font-family: ETBembo;
              /*src: url("ETBembo-RomanLF.ttf"); }*/
@@ -93,7 +138,7 @@ table.booktabs { width: auto;
 
 .booktabs th.nocmid { border-bottom: none; }
 
-.booktabs tbody tr:first-child td { padding-top: 0.65ex; } /* add space between thead row and tbody */ 
+.booktabs tbody tr:first-child td { padding-top: 0.65ex; } /* add space between thead row and tbody */
 
 .booktabs td { padding-left: 0.5em;
                padding-right: 0.5em;
@@ -271,7 +316,7 @@ img { max-width: 100%; margin-left: auto; margin-right: auto; display: block; }
                                            vertical-align: baseline;
                                            color: #f00000; }
 
-.sidenote-number:after { content: counter(sidenote-counter); 
+.sidenote-number:after { content: counter(sidenote-counter);
                          font-size: 0.9rem;
                          top: -0.5rem;
                          left: 0.1rem; }
@@ -310,6 +355,10 @@ code { font-family: Menlo Regular;
         border-radius: 3px;
         padding: 2px;
    }
+
+code a {
+  border-bottom: 0px;
+}
 
 .code { font-family: Menlo Regular, Consolas, "Liberation Mono", Menlo, Courier, monospace;
         color: #222; }
@@ -350,12 +399,13 @@ label.sidenote-number { display: inline; }
 label.margin-toggle:not(.sidenote-number) { display: none; }
 
 @media(max-width: 760px) { label.margin-toggle:not(.sidenote-number) { display: inline; }
-                           .sidenote { display: none; }
+                           figure .marginnote, .figure .marginnote { display: inline; }
+                           .sidenote, .marginnote { display: none; }
                            .marginnote { float: none; }
                            img.mached { width: 41px; height: 54px;}
                            #blogdesc { width: 90%; display: block;}
                            .thefooter { width: 90% !important; }
-                           .margin-toggle:checked + .sidenote, 
+                           .margin-toggle:checked + .sidenote,
                            .margin-toggle:checked + .marginnote { display: block;
                                                                   float: left;
                                                                   left: 1rem;
@@ -377,7 +427,8 @@ label.margin-toggle:not(.sidenote-number) { display: none; }
                                             vertical-align: baseline;
                                             position: relative; }
                            table, table.booktabs { width: 85%; }
-                           img { width: 100%; } }
+                           img { width: 100%; }
+                           p { overflow: hidden; }}
 
 /* amendments */
 

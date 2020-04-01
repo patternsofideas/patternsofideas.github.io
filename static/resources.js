@@ -74,3 +74,29 @@ $(window).on("load", function () {
     $("article > figcaption").remove();
   }
 })
+
+$(window).on("load", function () {
+    var h2IDs = [];
+    var h3IDs = [];
+    $("h2").each(function () {
+        var i = $(this).attr("id");
+        h2IDs.push(i);
+    })
+    $("h3").each(function () {
+        var i = $(this).attr("id");
+        h3IDs.push(i);
+    })
+
+    var count = 0;
+    var count3 = 0;
+    $("h2").each(function () {
+        $(this).append('<a href="#' + h2IDs[count] +'" class="heading-anchor">#</a>')
+        count++;
+    })
+    $("h3").each(function () {
+        $(this).append('<a href="#' + h3IDs[count3] +'" class="heading-anchor">#</a>')
+        count3++;
+    })
+
+    $("#bibliography").append('<a href="#bibliography" class="heading-anchor">#</a>')
+})
