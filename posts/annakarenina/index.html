@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Which translation of Anna Karenina should you read? &mdash; Patterns of Ideas</title>
+
+  <link type="text/css" rel="stylesheet" href="/static/sdist/e5e8436da5bd13834d31e16c0f179529.css">
+
+  <script type="text/javascript" src="/static/sdist/c752cd137614177858641b78f67df408.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='shortcut icon' href="/static/favicon.ico" type='image/x-icon'/>
+  <style type="text/css">
+   img { mix-blend-mode: multiply; }
+  </style>
+  <meta property="og:author" content="Samir Khan" />
+  <meta property="og:title" content="Which translation of Anna Karenina should you read?" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="Comparing translations of Anna Karenina." />
+  <meta property="og:url" content="http://localhost/posts/annakarenina/" />
+  <meta property="og:image" content="/static/img/athena.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Which translation of Anna Karenina should you read?" />
+  <meta name="twitter:description" content="Comparing translations of Anna Karenina." />
+  <meta name="twitter:url" content="http://localhost/posts/annakarenina/" />
+  <meta name="twitter:image" content="/static/img/athena.png" />
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+<body>
+  <div class="thearticle">
+
+  <article>
+  
+    <h1>Which translation of Anna Karenina should you read?</h1>
+    <p id="blog-p"><span id="blogdesc" class="marginnote">
+    <a href="/">home</a> ·
+    
+      <a href="/about/">
+        about</a>
+    </span></p>
+
+    <subtitle class="sub-date">September 08, 2020 · <span
+    style="font-size: 1.6rem;"><a style="border-bottom-width: 0px !important;"
+    href="http://localhost/posts/annakarenina/">&infin;</a></span></subtitle>
+
+    <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<p>Well, actually, who knows, maybe you should ask a friend or Google it. If you do though, you’ll get lots of results like <a href="https://www.nytimes.com/2014/12/28/books/review/new-translations-of-tolstoys-anna-karenina.html">this</a> detailed and thorough article. It gives both a focused discussion of particular word choices, working out the effects of one translator choosing “repelled” over another translator’s “repulsed,” and a more general explanation of how each translation handles Tolstoy’s stylistic quirks in Russian. The former is a narrow, microscopic, analysis; the latter is a broad, high-level, characterization of each translation.</p>
+<p>That’s certainly useful information, but how much does it help you pick a translation? Are you supposed to decide by looking at one or two sentences? Or are you supposed to have opinions about how Russian stylistic quirks should be handled? Wouldn’t it be nice to have something on a scale in between these two?</p>
+<p>This post explores such an intermediate option based on aggregating comparisons between individual sentences to compare chapters or sections. The goal is that, for example, if you’re choosing between translations X, Y, and Z, you want to know something like “X and Y are similar for the first half of the book but different for the second; on the other hand, Y and Z are mostly similar for the entire book except the final chapter.” With that information in mind, your choice between X, Y, and Z reduces mostly to a choice between whether you prefer X’s rendition of the first half to Y’s. As an added bonus, you can then look specifically at the which sentences between the first half of X and the first half of Y are the most different, which more strongly highlights stylistic choices.</p>
+<p>To make these comparisons, we first choose a way to compare individual sentences. Then, as a case study, we compare two pivotal chapters from <em>Anna Karenina</em> in two translations, and see that the translators differ far more in one than in the other. This alone does not decisively recommend one translation over another, but is a nice perspective, and could give useful insights if repeated for every chapter.</p>
+<h2>1. Similarities between sentences</h2>
+<p>To measure the similarity between translations we need to measure the similarity between sentences. The most fashionable way of doing this is with embeddings from a neural network, but this is the wrong thing to do here. Deep embeddings are meant to detect semantic similarity, and the different translations of a sentence are literally supposed to have the same meaning, so they’ll always appear highly similar.</p>
+<p>Instead, we use a measure based on the number of words two sentences share. For example, if sentence A has 10 words and sentence B has 12 words, and there are 6 words that appear in both sentences, then 60% of the words in sentence A also appear in sentence B and 50% of the words in sentence B also appear in sentence A. To get a single distance, we average these, and say the sentences are 55% similar.<span><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle"/><span class="sidenote">In practice, to avoid inflating similarity, we ignore filler words like “the” or “and.”<br />
+<br />
+</span></span></p>
+<p>What is this quantity actually measuring? Clearly if two translators use different English words to translate a Russian word, this will decrease their similarity. But it also captures some syntactic elements: if two translators arrange clauses differently, they will be forced to use different verb tenses, and this will increase dissimilarity. Furthermore, since we’re considering only individual sentences level, if translator A splits a Russian sentence into two English sentences, while translator B leaves the sentence intact, each of translator A’s sentences will be less similar to translator B’s sentence.</p>
+<h2>2. Comparing two scenes</h2>
+<p>As a case study, we consider two scenes from <em>Anna Karenina</em>: the scene from Part II in which Anna watches Vronsky injure himself in a horse race and reveals the affair to her husband and the scene from Part VII in which Anna commits suicide. These are both pivotal scenes: the first triggers the downward spiral that will consume Anna over the course of the novel, and the second is the tragic culmination of that spiral. How you read these two scenes, then, is a crucial part of how you read the entire novel.</p>
+<p>For each of these two scenes, we take two popular translations: Constance Garnett’s from 1901 and the more recent Pevear and Volokhonsky (P&amp;V) translation. We can match the sentences between the two translations<span><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"/><span class="sidenote">There are some annoying details here: in fact, not all sentences are able to be matched exactly, and sentences of fewer than 10 substantive words are omitted. The final matchings were manually checked for correctness.<br />
+<br />
+</span></span> and then compute the distance between the corresponding sentences. For each of these</p>
+<p>We visualize these distributions:</p>
+<p><img src="/static/img/translations/plot.png" alt="Comparison of sections" style="width: 700;"/></p>
+<p>(Each dot represents a single sentence, with a boxplot overlaid for summary statistics. The horizontal positions of the dots within each group are for clarity and have no meaning.)</p>
+<p>At a first glance, the suicide scene has a much lower median similarity, suggesting that Garnett and P&amp;V diverged much more in translating the suicide scene than in translating the race scene. In fact, a statistical test rejects the null hypothesis that the two boxplots come from the same distribution with a p-value of 0.04. That being said, there are four sentences in the race scene that had strongly dissimilar translations; in fact, three of these four have more dissimilar translations than all but one sentence from the suicide scene.</p>
+<p>Let’s take a look at these three sentences from the race scene:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><em>P&amp;V</em></th>
+<th style="text-align: left;"><em>Garnett</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">She started thrashing about like a trapped bird, now wanting to get up and go somewhere, now turning to Betsy.</td>
+<td style="text-align: left;">She began fluttering like a caged bird, at one moment would have got up and moved away, at the next turned to Betsy.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">She lowered the binoculars and made as if to leave; but just then an officer galloped up and reported something to the emperor.</td>
+<td style="text-align: left;">She laid down the opera-glass, and would have moved away, but at that moment an officer galloped up and made some announcement to the Tsar.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">She silently got into Alexey Alexandrovitch’s carriage, and they silently drove away from the crowd of vehicles.</td>
+<td style="text-align: left;">She took her seat in her husband’s carriage in silence, and in silence drove out of the crowd of carriages.</td>
+</tr>
+</tbody>
+</table>
+<p>Inspecting these pairs, we see that the differences are driven by word-choice: Garnett’s “thrash” vs. P&amp;V’s “flutter”; Garnett’s “binoculars” vs. P&amp;V’s “opera-glass.” The general structure of the sentences are preserved though, and many of the substitutions (e.g. carriages for vehicles) are relatively minor.</p>
+<p>As a point of comparison, consider the two most dissimilar sentences from the suicide scene:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><em>P&amp;V</em></th>
+<th style="text-align: left;"><em>Garnett</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A feeling seized her, similar to what she experienced when preparing to go into the water for a swim, and she crossed herself.</td>
+<td style="text-align: left;">A feeling such as she had known when about to take the first plunge in bathing came upon her, and she crossed herself.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Rhythmically jolting over the joints of the tracks, the carriage in which Anna sat rolled past the platform, the brick wall, the signal disc, other carriages; the well–oiled, smooth–rolling wheels rang slightly over the rails, the window lit up with bright evening sunlight, and the breeze played with the curtain.</td>
+<td style="text-align: left;">The train, jerking at regular intervals at the junctions of the rails, rolled by the platform, past a stone wall, a signal-box, past other trains; the wheels, moving more smoothly and evenly, resounded with a slight clang on the rails.</td>
+</tr>
+</tbody>
+</table>
+<p>This table shows more significant reworking than the previous one. In the first row, the sentence is structured differently in each translation, and so P&amp;V’s “seized” corresponds to Garnett’s “came upon.” Neither of these words appear in the P&amp;V translation, creating more dissimilarity than if Garnett had used the same structure but replaced seized with a single different verb; the same argument holds for “preparing to go into” and “first plunge.”</p>
+<p>Looking at these extreme values then, has backed up the result that the distribution of similarities in the suicide chapter are not the same as those in the race chapter. The comparison of these distributions leads to a macroscopic statement about the relationship between Garnett’s translation and P&amp;V’s translation: their translations of Anna’s suicide are more different than their translations of the race. If we did this for all of the chapters (which required a bit more data cleaning than I wanted to do), we would end up with a general sense of how different an experience each of the translations gives. I’m not sure if this is academically more interesting than other comparisons, but it seems like good information to have when picking a translation.</p>
+</body>
+</html>
+
+  
+  </article>
+
+  </div>
+  <div class="thefooter">
+    <p>
+    <br><br>Copyright, <i>2016</i></p>
+  </div> <!-- footer end -->
+</body>
+</html>
